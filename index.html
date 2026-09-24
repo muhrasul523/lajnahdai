@@ -21,7 +21,7 @@
             --text-muted: #64748b;
             --border-color: rgba(203, 213, 225, 0.6);
             
-            /* Status Colors */
+            /* Status Colors Sisa Kebutuhan */
             --sisa-green: #10b981;
             --sisa-blue: #3b82f6;
             --sisa-red: #ef4444;
@@ -35,14 +35,45 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Loaders UI */
+        .loader-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px); z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Progress Bar (Initial) */
+        .progress-bar-container {
+            width: 280px; height: 10px; background: #e2e8f0;
+            border-radius: 20px; overflow: hidden; margin: 15px 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .progress-bar-fill {
+            height: 100%; width: 0%; background: var(--primary-gradient);
+            border-radius: 20px; transition: width 0.1s linear;
+        }
+        .progress-text { font-weight: 800; color: var(--primary); font-size: 1.2rem; }
+        
+        /* Spinner & Animated Text (Actions) */
+        .custom-spinner {
+            width: 60px; height: 60px; border: 6px solid #e2e8f0;
+            border-top-color: var(--primary); border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 0 auto 20px auto;
+        }
+        .animated-text { animation: pulse 1.5s infinite; font-size: 1.1rem; color: var(--text-main); }
+        .dots::after { content: ''; animation: dots 1.5s steps(4, end) infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }
+        @keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
+
+        /* General UI */
         .glass-card {
-            background: var(--surface);
-            border-radius: 24px;
+            background: var(--surface); border-radius: 24px;
             box-shadow: 0 10px 40px -10px rgba(37, 99, 235, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 24px;
-            margin-bottom: 24px;
+            backdrop-filter: blur(10px); padding: 24px; margin-bottom: 24px;
         }
         
         .gradient-text {
@@ -56,10 +87,8 @@
         .top-nav { display: none; }
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-color);
-            display: flex; justify-content: space-around;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color); display: flex; justify-content: space-around;
             padding: 12px 10px 24px 10px; z-index: 1000;
         }
         .nav-item {
@@ -68,7 +97,7 @@
             padding: 8px 16px; border-radius: 16px;
         }
         .nav-item i { font-size: 1.4rem; margin-bottom: 4px; }
-        .nav-item span { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+        .nav-item span { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
         .nav-item.active { background: var(--primary-gradient); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25); }
 
         @media (min-width: 768px) {
@@ -80,63 +109,44 @@
             body { padding-bottom: 0; }
         }
 
-        .form-control, .form-select {
+        /* Inputs & Buttons */
+        .form-control {
             border-radius: 14px; border: 1px solid var(--border-color);
-            padding: 14px 16px; font-weight: 500; background: #f8fafc;
-            transition: all 0.2s;
+            padding: 14px 16px; font-weight: 600; background: #f8fafc; transition: all 0.2s;
         }
-        .form-control:focus, .form-select:focus {
-            background: #fff; border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
+        .form-control:focus { background: #fff; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
         
-        /* Modern Select untuk Grafik */
         .select-grafik {
-            appearance: none;
-            background-color: rgba(37, 99, 235, 0.05);
-            border: 1px solid rgba(37, 99, 235, 0.2);
-            color: var(--primary);
-            font-weight: 700;
-            padding: 10px 40px 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            outline: none;
-            transition: all 0.3s ease;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232563EB' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 14px;
+            appearance: none; background-color: rgba(37, 99, 235, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.2); color: var(--primary);
+            font-weight: 700; padding: 12px 40px 12px 20px; border-radius: 50px; cursor: pointer; outline: none; transition: all 0.3s ease;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232563EB' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 15px center; background-size: 14px;
         }
-        .select-grafik:hover, .select-grafik:focus {
-            background-color: rgba(37, 99, 235, 0.1);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
-        }
+        .select-grafik:hover { background-color: rgba(37, 99, 235, 0.1); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15); }
 
         .btn-modern {
-            background: var(--primary-gradient); border: none;
-            color: white; border-radius: 14px; padding: 14px 24px;
+            background: var(--primary-gradient); border: none; color: white; border-radius: 14px; padding: 14px 24px;
             font-weight: 700; letter-spacing: 0.5px; transition: all 0.3s;
         }
         .btn-modern:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3); color: white; }
         
+        /* Table Rekap & Riwayat */
         .table-modern { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
         .table-modern th { 
-            background: transparent; color: var(--text-muted); 
-            font-weight: 700; text-transform: uppercase; font-size: 0.75rem; 
+            background: transparent; color: var(--text-muted); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; 
             letter-spacing: 1px; padding: 0 16px 8px 16px; border: none;
         }
         .table-modern td {
-            background: #ffffff; padding: 18px 16px; border: none;
-            vertical-align: middle; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9;
+            background: #ffffff; padding: 18px 16px; border: none; vertical-align: middle;
+            border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9;
         }
         .table-modern tr td:first-child { border-radius: 16px 0 0 16px; border-left: 1px solid #f1f5f9; }
         .table-modern tr td:last-child { border-radius: 0 16px 16px 0; border-right: 1px solid #f1f5f9; }
         .table-modern tbody tr { box-shadow: 0 2px 5px rgba(0,0,0,0.01); transition: transform 0.2s; }
         .table-modern tbody tr:hover { transform: scale(1.01); box-shadow: 0 8px 20px rgba(0,0,0,0.04); z-index: 1; position: relative; }
 
-        .status-badge {
-            padding: 8px 16px; border-radius: 10px; font-weight: 800; display: inline-block;
-        }
+        .status-badge { padding: 8px 16px; border-radius: 10px; font-weight: 800; display: inline-block; font-size: 1rem; }
         .status-green { background: var(--sisa-green); color: white; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
         .status-blue { background: var(--sisa-blue); color: white; box-shadow: 0 4px 10px rgba(59,130,246,0.3); }
         .status-red { background: var(--sisa-red); color: white; box-shadow: 0 4px 10px rgba(239,68,68,0.3); }
@@ -148,11 +158,26 @@
 </head>
 <body>
 
+    <!-- Loader Aplikasi Awal (Progress Bar) -->
+    <div id="initialLoader" class="loader-overlay">
+        <h2 class="gradient-text fw-bolder mb-2"><i class="bi bi-layers-half"></i> Kafalah Dai</h2>
+        <span class="text-muted fw-bold small">Memuat sistem...</span>
+        <div class="progress-bar-container">
+            <div id="initialProgressBar" class="progress-bar-fill"></div>
+        </div>
+        <span id="progressText" class="progress-text">0%</span>
+    </div>
+
+    <!-- Loader Aksi (Edit/Save/Delete) -->
+    <div id="actionLoader" class="loader-overlay" style="display: none;">
+        <div class="custom-spinner"></div>
+        <h4 class="fw-bold text-main animated-text mt-3">Mohon bersabar sejenak<span class="dots"></span></h4>
+    </div>
+
     <nav class="navbar navbar-expand-lg top-nav py-3">
         <div class="container">
             <a class="navbar-brand fs-4 fw-bolder" href="#">
-                <i class="bi bi-layers-half text-primary"></i> 
-                <span class="gradient-text ms-1">Kafalah Dai</span>
+                <i class="bi bi-layers-half text-primary"></i> <span class="gradient-text ms-1">Kafalah Dai</span>
             </a>
             <div class="d-flex ms-auto gap-3">
                 <button class="btn btn-light rounded-pill px-4 fw-bold shadow-sm" onclick="trySwitchTab('rekap')">Rekap</button>
@@ -164,7 +189,9 @@
 
     <div class="container mt-3 mb-5 pb-5">
         
+        <!-- =================== TAB REKAP =================== -->
         <div id="tab-rekap" class="tab-content-area active">
+            <!-- Filter Rentang Waktu -->
             <div class="glass-card mb-4 p-3 p-md-4">
                 <div class="row g-3 align-items-end">
                     <div class="col-6 col-md-5">
@@ -176,15 +203,14 @@
                         <input type="month" id="filterEnd" class="form-control fw-bold" onchange="renderDashboard()">
                     </div>
                     <div class="col-12 col-md-2">
-                        <button class="btn btn-modern w-100" onclick="renderDashboard()">
-                            <i class="bi bi-funnel-fill"></i> Filter
-                        </button>
+                        <button class="btn btn-modern w-100" onclick="renderDashboard()"><i class="bi bi-funnel-fill"></i> Filter</button>
                     </div>
                 </div>
             </div>
 
+            <!-- Tabel Dasbor Utama -->
             <div class="glass-card table-responsive p-4">
-                <h5 class="fw-bold mb-4 text-main"><i class="bi bi-table text-primary me-2"></i>Tabel Rekapitulasi</h5>
+                <h5 class="fw-bolder mb-4 text-main"><i class="bi bi-table text-primary me-2"></i>Tabel Rekapitulasi</h5>
                 <table class="table-modern">
                     <thead>
                         <tr>
@@ -196,11 +222,10 @@
                             <th width="25%" class="text-end">Sisa Kebutuhan</th>
                         </tr>
                     </thead>
-                    <tbody id="rekapTableBody">
-                    </tbody>
+                    <tbody id="rekapTableBody"></tbody>
                     <tfoot>
                         <tr><td colspan="6"><hr class="text-muted opacity-25"></td></tr>
-                        <!-- Menyamakan ukuran font data (fs-6), dan membesarkan footer (fs-5) -->
+                        <!-- Baris Total dibuat lebih besar (fs-5) daripada data (fs-6) -->
                         <tr class="fw-bolder fs-5 bg-light rounded-4 shadow-sm">
                             <td colspan="3" class="text-end text-muted p-3 rounded-start-4">TOTAL KESELURUHAN</td>
                             <td class="text-end text-danger p-3" id="totKebutuhan">Rp 0</td>
@@ -211,28 +236,28 @@
                 </table>
             </div>
 
+            <!-- Grafik -->
             <div class="glass-card mt-4 p-4">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-                    <h5 class="fw-bold m-0 text-main" id="chartTitle">
+                    <h5 class="fw-bolder m-0 text-main" id="chartTitle">
                         <i class="bi bi-bar-chart-fill text-primary me-2"></i>Kebutuhan dan Dana Masuk
                     </h5>
-                    <!-- Dropdown Grafik Dipercantik -->
-                    <select id="chartFilter" class="select-grafik" onchange="renderDashboard()">
+                    <!-- 4 Opsi Grafik -->
+                    <select id="chartFilter" class="select-grafik shadow-sm" onchange="renderDashboard()">
                         <option value="all">Kebutuhan dan Dana Masuk</option>
-                        <option value="kebutuhan">Kebutuhan Saja</option>
-                        <option value="pemasukan">Dana Masuk Saja</option>
+                        <option value="kebutuhan">Kebutuhan</option>
+                        <option value="pemasukan">Dana Masuk</option>
                         <option value="dai">Jumlah Dai</option>
                     </select>
                 </div>
-                <div style="height: 350px;">
-                    <canvas id="financeChart"></canvas>
-                </div>
+                <div style="height: 350px;"><canvas id="financeChart"></canvas></div>
             </div>
         </div>
 
+        <!-- =================== TAB RIWAYAT =================== -->
         <div id="tab-riwayat" class="tab-content-area">
             <div class="glass-card p-4">
-                <h4 class="fw-bold mb-4 gradient-text">Riwayat Transaksi</h4>
+                <h4 class="fw-bolder mb-4 gradient-text">Riwayat Transaksi</h4>
                 <div class="table-responsive">
                     <table class="table-modern w-100 align-middle">
                         <thead>
@@ -245,18 +270,18 @@
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="tableBody">
-                        </tbody>
+                        <tbody id="tableBody"></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
+        <!-- =================== TAB INPUT =================== -->
         <div id="tab-input" class="tab-content-area">
             <div class="glass-card p-4" style="max-width: 700px; margin: 0 auto;">
-                <h4 class="fw-bold mb-4 gradient-text text-center" id="formTitle">Manajemen Data</h4>
+                <h4 class="fw-bolder mb-4 gradient-text text-center" id="formTitle">Manajemen Data</h4>
                 
-                <ul class="nav nav-pills nav-fill mb-4 p-2 bg-light rounded-4 border" id="pills-tab" role="tablist">
+                <ul class="nav nav-pills nav-fill mb-4 p-2 bg-light rounded-4 border shadow-sm" id="pills-tab" role="tablist">
                   <li class="nav-item-form me-2 flex-fill" role="presentation">
                     <button class="nav-link active w-100 rounded-3 fw-bold py-3 shadow-sm" data-bs-toggle="pill" data-bs-target="#pills-masuk" type="button" id="tab-btn-masuk">
                         <i class="bi bi-box-arrow-in-down"></i> Input Dana Masuk
@@ -270,7 +295,6 @@
                 </ul>
 
                 <div class="tab-content mt-2" id="pills-tabContent">
-                    
                     <div class="tab-pane fade show active" id="pills-masuk" role="tabpanel">
                         <form id="formPemasukan" onsubmit="submitForm(event, 'Pemasukan')">
                             <div class="row g-4">
@@ -293,7 +317,7 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-modern w-100 mt-4 btn-submit">Simpan Dana Masuk</button>
-                            <button type="button" class="btn btn-light w-100 mt-2 btn-cancel fw-bold text-danger" style="display:none" onclick="cancelEdit()">Batal Edit</button>
+                            <button type="button" class="btn btn-light w-100 mt-2 btn-cancel fw-bold text-danger shadow-sm" style="display:none" onclick="cancelEdit()">Batal Edit</button>
                         </form>
                     </div>
 
@@ -308,7 +332,7 @@
                                     <label class="form-label text-muted small fw-bold">Jumlah Dai</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" name="keterangan" placeholder="Contoh: 300" required>
-                                        <span class="input-group-text border-0 bg-light fw-bold text-muted">Orang</span>
+                                        <span class="input-group-text border-0 bg-light fw-bold text-muted px-4">Orang</span>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -317,15 +341,15 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-modern w-100 mt-4 btn-submit">Simpan Kebutuhan Kafalah</button>
-                            <button type="button" class="btn btn-light w-100 mt-2 btn-cancel fw-bold text-danger" style="display:none" onclick="cancelEdit()">Batal Edit</button>
+                            <button type="button" class="btn btn-light w-100 mt-2 btn-cancel fw-bold text-danger shadow-sm" style="display:none" onclick="cancelEdit()">Batal Edit</button>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Mobile Nav -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="trySwitchTab('rekap')" id="nav-rekap">
             <i class="bi bi-grid-fill"></i><span>Rekap</span>
@@ -339,20 +363,21 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script>
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyIsY0hZm9BjaQh96q_eu-EUOyioCW6bnGWHNTpZP5rj5K2ITEp_btHqIsfy3uWtxogoQ/exec'; // MASUKKAN URL APP SCRIPT ANDA DISINI
+        // ----------------------------------------------------
+        // ISI URL WEB APP ANDA DI SINI
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyIsY0hZm9BjaQh96q_eu-EUOyioCW6bnGWHNTpZP5rj5K2ITEp_btHqIsfy3uWtxogoQ/exec'; 
+        // ----------------------------------------------------
 
-        // GLOBAL FAIL-SAFE: Inisialisasi wajib sebagai Array kosong, mencegah `.length` error
         let db = [];
         let chartInstance = null;
         let isAuthenticated = false; 
         let editId = null;
 
-        const Toast = Swal.mixin({
-            toast: true, position: 'top-end', showConfirmButton: false, timer: 2500, timerProgressBar: true
-        });
-
+        // ANIMASI LOADING AWAL (0-100%)
+        let initProgress = 0;
+        let isDataFetched = false;
+        
         document.addEventListener("DOMContentLoaded", () => {
             setDefaultDates();
             const now = new Date();
@@ -360,44 +385,62 @@
             document.getElementById('filterStart').value = `2026-01`;
             document.getElementById('filterEnd').value = `${now.getFullYear()}-${mm}`;
 
-            loadData();
+            // Mulai animasi loading buatan
+            let progressInterval = setInterval(() => {
+                initProgress += Math.floor(Math.random() * 15) + 5;
+                if(initProgress > 85 && !isDataFetched) initProgress = 85; // Tahan di 85% jika data belum datang
+                
+                if(initProgress >= 100) {
+                    initProgress = 100;
+                    clearInterval(progressInterval);
+                    // Hilangkan Layar Loading secara Smooth
+                    setTimeout(() => {
+                        document.getElementById('initialLoader').style.opacity = '0';
+                        setTimeout(() => document.getElementById('initialLoader').style.display = 'none', 300);
+                    }, 400);
+                }
+                document.getElementById('initialProgressBar').style.width = initProgress + '%';
+                document.getElementById('progressText').innerText = initProgress + '%';
+            }, 100); // Super Cepat (Maks sekitar 1.5 detik)
+
+            loadData(progressInterval);
         });
 
-        async function loadData() {
-            // Jika link kosong, mencegah fetch ke URL Github yang memicu error HTML 404
+        // ---------------------------------------------
+        // BLOK KONEKSI KE DATABASE (API SPREADSHEET)
+        // ---------------------------------------------
+        async function loadData(progressInterval) {
             if (!GAS_API_URL || GAS_API_URL === '') {
-                console.warn("URL API Kosong. Menunggu pengisian...");
-                processDataAndRender();
+                console.warn("URL API Kosong.");
+                isDataFetched = true; initProgress = 100;
                 return;
             }
-
             try {
                 const response = await fetch(GAS_API_URL + "?action=getData");
-                if (!response.ok) throw new Error("Gagal mengambil data dari server");
-                
                 const data = await response.json();
-                
-                // Mencegah error jika kembalian server bukan berupa Array
                 db = Array.isArray(data) ? data : []; 
                 processDataAndRender();
             } catch (error) {
                 console.error("Koneksi Database Gagal:", error);
-                db = []; // Fail-safe
-                processDataAndRender();
-                Toast.fire({ icon: 'error', title: 'Belum terhubung ke Database' });
+                db = []; 
+            } finally {
+                isDataFetched = true;
+                initProgress = 100; // Dorong progres ke 100% setelah fetch selesai
             }
         }
         
-        async function silentSync() {
+        async function refreshDataSilent() {
             if (!GAS_API_URL || GAS_API_URL === '') return;
             try {
                 const response = await fetch(GAS_API_URL + "?action=getData");
-                const data = await response.json();
-                db = Array.isArray(data) ? data : [];
+                db = await response.json();
                 processDataAndRender();
-            } catch (e) { console.error("Sinkronisasi latar belakang gagal"); }
+            } catch (e) { console.error("Gagal sinkron"); }
         }
 
+        // ---------------------------------------------
+        // BLOK RENDERING UI
+        // ---------------------------------------------
         function processDataAndRender() {
             renderDashboard();
             renderTable();
@@ -409,13 +452,13 @@
             let chartFilterType = document.getElementById('chartFilter').value;
             let chartTitleElement = document.getElementById('chartTitle');
 
-            // Set Judul Grafik Sesuai Filter
+            // Set Judul Grafik Dinamis Sesuai Filter
             if (chartFilterType === 'all') chartTitleElement.innerHTML = `<i class="bi bi-bar-chart-fill text-primary me-2"></i>Kebutuhan dan Dana Masuk`;
-            else if (chartFilterType === 'kebutuhan') chartTitleElement.innerHTML = `<i class="bi bi-bar-chart-fill text-danger me-2"></i>Kebutuhan Dana`;
-            else if (chartFilterType === 'pemasukan') chartTitleElement.innerHTML = `<i class="bi bi-bar-chart-fill text-primary me-2"></i>Dana Masuk`;
+            else if (chartFilterType === 'kebutuhan') chartTitleElement.innerHTML = `<i class="bi bi-bar-chart-fill text-danger me-2"></i>Grafik Kebutuhan Dana`;
+            else if (chartFilterType === 'pemasukan') chartTitleElement.innerHTML = `<i class="bi bi-bar-chart-fill text-primary me-2"></i>Grafik Dana Masuk`;
             else if (chartFilterType === 'dai') chartTitleElement.innerHTML = `<i class="bi bi-people-fill text-success me-2"></i>Grafik Jumlah Dai`;
 
-            // Filter Berdasarkan Bulan
+            // Filter Waktu
             let filteredDb = db.filter(item => {
                 if(!item.Tanggal) return false;
                 let dateStr = item.Tanggal.substring(0, 7); 
@@ -424,11 +467,11 @@
                 return true;
             });
 
+            // Agregasi Bulanan
             let monthlyData = {};
             filteredDb.forEach(item => {
                 let nom = parseInt(item.Nominal) || 0;
                 let monthKey = item.Tanggal.substring(0, 7);
-                // Extract tanpa zona waktu agar bulan tidak mundur
                 let [yyyy, mm] = monthKey.split('-');
                 let monthName = new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
                 
@@ -452,22 +495,20 @@
             sortedKeys.forEach((key, index) => {
                 let d = monthlyData[key];
                 
-                // Rumus Valid: Kebutuhan - Masuk
+                // RUMUS SISA: Kebutuhan Dana - Dana Masuk
                 let sisa = d.kebutuhan - d.masuk;
                 
                 totalK += d.kebutuhan;
                 totalM += d.masuk;
                 totalSisa += sisa;
 
-                // Logika Warna Final:
-                // Kebutuhan > Masuk -> Minus Dana -> MERAH
-                // Kebutuhan == Masuk -> Pas -> BIRU
-                // Masuk > Kebutuhan -> Surplus -> HIJAU
+                // WARNA: Merah (Minus/Kurang), Biru (Lunas), Hijau (Surplus)
                 let sisaBadge = '';
                 if(sisa > 0) sisaBadge = `<span class="status-badge status-red">${formatRupiahText(sisa)}</span>`;
                 else if (sisa === 0) sisaBadge = `<span class="status-badge status-blue">Rp 0</span>`;
-                else sisaBadge = `<span class="status-badge status-green">${formatRupiahText(Math.abs(sisa))}</span>`;
+                else sisaBadge = `<span class="status-badge status-green">${formatRupiahText(Math.abs(sisa))}</span>`; // Surplus
 
+                // SEMUA DATA MENGGUNAKAN KELAS FONT fs-6
                 let tr = `
                     <tr>
                         <td class="text-muted fw-bold">${index + 1}</td>
@@ -487,9 +528,9 @@
                 dataDai.push(d.jmlDai);
             });
 
-            if (sortedKeys.length === 0) tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-5 fw-bold">Belum ada data pada rentang waktu ini.</td></tr>';
+            if (sortedKeys.length === 0) tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-5 fw-bold">Belum ada data.</td></tr>';
 
-            // Menghitung Total
+            // FOOTER (TOTAL) - Menggunakan Font fs-5 (Lebih Besar)
             document.getElementById('totKebutuhan').innerText = formatRupiahText(totalK);
             document.getElementById('totMasuk').innerText = formatRupiahText(totalM);
             
@@ -499,6 +540,7 @@
             else totBadge = `<span class="status-badge status-green text-white">${formatRupiahText(Math.abs(totalSisa))}</span>`;
             document.getElementById('totSisa').innerHTML = totBadge;
 
+            // Render Chart
             let datasets = [];
             let chartStepSize = 50000000;
             let chartCallback = function(value) { return 'Rp ' + (value/1000000) + ' Jt'; };
@@ -509,9 +551,11 @@
             if(chartFilterType === 'all' || chartFilterType === 'pemasukan') {
                 datasets.push({ label: 'Dana Masuk', data: dataMasuk, backgroundColor: 'rgba(37, 99, 235, 0.9)', borderRadius: 8, maxBarThickness: 45 });
             }
+            
+            // JIKA GRAFIK DAI DIPILIH (Sumbu Y Kelipatan 50, Bukan Juta)
             if(chartFilterType === 'dai') {
                 datasets.push({ label: 'Jumlah Dai', data: dataDai, backgroundColor: 'rgba(16, 185, 129, 0.9)', borderRadius: 8, maxBarThickness: 45 });
-                chartStepSize = 50; // Skala kelipatan 50 untuk Grafik Jumlah Dai
+                chartStepSize = 50; 
                 chartCallback = function(value) { return value; };
             }
 
@@ -545,24 +589,26 @@
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
             
-            // Urutkan data berdasarkan string tanggal, karena format YYYY-MM-DD aman untuk disortir string
             let filteredData = [...db].sort((a, b) => b.Tanggal.localeCompare(a.Tanggal));
 
             filteredData.forEach(item => {
                 let badgeClass = item.Tipe === 'Pemasukan' ? 'bg-primary bg-opacity-10 text-primary' : 'bg-danger bg-opacity-10 text-danger';
-                let linkBukti = item.Bukti_URL ? 
-                    `<a href="${item.Bukti_URL}" target="_blank" class="btn btn-sm btn-light py-1 px-2 rounded-3 text-primary border"><i class="bi bi-image"></i> Lihat</a>` : 
+                let linkBukti = item.Bukti_URL && item.Bukti_URL !== "Uploading..." ? 
+                    `<a href="${item.Bukti_URL}" target="_blank" class="btn btn-sm btn-light py-1 px-2 rounded-3 text-primary border shadow-sm"><i class="bi bi-image"></i> Lihat</a>` : 
                     '<span class="text-muted small">-</span>';
                 
-                // Pemecahan string murni agar zona waktu browser lokal tidak mengurangi hari
-                let tglRaw = item.Tanggal.substring(0, 10);
-                let [yyyy, mm, dd] = tglRaw.split('-');
-                let dateDisplay = '';
+                // PENCEGAHAN TANGGAL MUNDUR: Ekstrak secara mentah tanpa time zone
+                let tglRaw = '';
+                if(item.Tanggal) tglRaw = item.Tanggal.substring(0, 10);
                 
-                if (item.Tipe === 'Kebutuhan') {
-                    dateDisplay = new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
-                } else {
-                    dateDisplay = `${parseInt(dd)} ${new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'short' })} ${yyyy}`;
+                let dateDisplay = '-';
+                if(tglRaw && tglRaw.length === 10) {
+                    let [yyyy, mm, dd] = tglRaw.split('-');
+                    if (item.Tipe === 'Kebutuhan') {
+                        dateDisplay = new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+                    } else {
+                        dateDisplay = `${parseInt(dd)} ${new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'short' })} ${yyyy}`;
+                    }
                 }
 
                 let detailSuffix = item.Tipe === 'Kebutuhan' ? ' Dai' : '';
@@ -575,8 +621,8 @@
                         <td class="text-end fw-bolder text-main fs-6">${formatRupiahText(item.Nominal)}</td>
                         <td class="text-center">${linkBukti}</td>
                         <td class="text-center text-nowrap">
-                            <button class="btn btn-sm btn-light border text-primary rounded-circle me-1" onclick="editAction('${item.ID}')"><i class="bi bi-pencil-fill"></i></button>
-                            <button class="btn btn-sm btn-light border text-danger rounded-circle" onclick="deleteAction('${item.ID}')"><i class="bi bi-trash3-fill"></i></button>
+                            <button class="btn btn-sm btn-light border text-primary rounded-circle me-1 shadow-sm" onclick="editAction('${item.ID}')"><i class="bi bi-pencil-fill"></i></button>
+                            <button class="btn btn-sm btn-light border text-danger rounded-circle shadow-sm" onclick="deleteAction('${item.ID}')"><i class="bi bi-trash3-fill"></i></button>
                         </td>
                     </tr>
                 `;
@@ -584,21 +630,19 @@
             });
         }
 
+        // ---------------------------------------------
+        // PROTEKSI & AKSI (EDIT/HAPUS/SIMPAN)
+        // ---------------------------------------------
         async function authGuard() {
             if (isAuthenticated) return true;
             const { value: code } = await Swal.fire({
-                title: 'Akses Terkunci', 
-                input: 'password', 
-                inputPlaceholder: 'Masukkan Kode Akses',
+                title: 'Akses Terkunci', input: 'password', inputPlaceholder: 'Masukkan Kode Akses',
                 showCancelButton: true, confirmButtonText: 'Buka Akses', cancelButtonText: 'Batal',
                 confirmButtonColor: '#2563EB', customClass: { popup: 'rounded-4' }
             });
-            // Tidak ada lagi hint teks "Gunakan sandi lajnah..."
-            if (code === 'lajnah') {
-                isAuthenticated = true; return true;
-            } else if (code) {
-                Swal.fire({title: 'Akses Ditolak', text: 'Kode sandi salah!', icon: 'error', confirmButtonColor: '#ef4444'});
-            }
+            // Tidak ada hint teks sandi
+            if (code === 'lajnah') { isAuthenticated = true; return true; } 
+            else if (code) { Swal.fire({title: 'Akses Ditolak', text: 'Kode sandi salah!', icon: 'error', confirmButtonColor: '#ef4444'}); }
             return false;
         }
 
@@ -607,10 +651,6 @@
                 const authed = await authGuard();
                 if(!authed) return;
             }
-            switchTabUI(tabId);
-        }
-
-        function switchTabUI(tabId) {
             document.querySelectorAll('.tab-content-area').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
@@ -618,57 +658,61 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Tampilkan/Sembunyikan Loader Aksi
+        function showActionLoader() { document.getElementById('actionLoader').style.display = 'flex'; }
+        function hideActionLoader() { document.getElementById('actionLoader').style.display = 'none'; }
+
         async function deleteAction(id) {
             if (!await authGuard()) return;
             if (!GAS_API_URL || GAS_API_URL === '') return Swal.fire('Error', 'API Belum Tersambung', 'error');
             
             Swal.fire({
-                title: 'Hapus Transaksi?', text: "Tindakan ini tidak dapat dibatalkan.", icon: 'warning',
+                title: 'Hapus Transaksi?', text: "Data ini tidak dapat dikembalikan.", icon: 'warning',
                 showCancelButton: true, confirmButtonColor: '#ef4444', confirmButtonText: 'Ya, Hapus!'
-            }).then((res) => {
+            }).then(async (res) => {
                 if(res.isConfirmed) {
-                    db = db.filter(x => x.ID !== id);
-                    processDataAndRender();
-                    Toast.fire({ icon: 'info', title: 'Menghapus data di server...' });
-
-                    fetch(GAS_API_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({ action: 'delete', id: id }),
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-                    }).then(r => r.json()).then(res => {
-                        if(res.status === 'success') {
-                            Toast.fire({ icon: 'success', title: 'Data terhapus permanen.' });
-                            silentSync(); 
-                        } else { Toast.fire({ icon: 'error', title: 'Gagal dihapus.' }); silentSync(); }
-                    }).catch(e => {
-                        Toast.fire({ icon: 'error', title: 'Jaringan Error.' });
-                    });
+                    showActionLoader();
+                    try {
+                        const r = await fetch(GAS_API_URL, {
+                            method: 'POST', body: JSON.stringify({ action: 'delete', id: id }),
+                            headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                        });
+                        const respon = await r.json();
+                        hideActionLoader();
+                        if(respon.status === 'success') {
+                            db = db.filter(x => x.ID !== id); // Update lokal
+                            processDataAndRender();
+                        } else {
+                            Swal.fire('Error', 'Gagal dihapus dari server.', 'error');
+                        }
+                    } catch(e) {
+                        hideActionLoader(); Swal.fire('Error', 'Koneksi jaringan gagal.', 'error');
+                    }
                 }
             });
         }
 
         async function editAction(id) {
             if (!await authGuard()) return;
-            
             let item = db.find(x => x.ID === id);
             if(!item) return;
             
             editId = id;
-            switchTabUI('input');
+            trySwitchTab('input');
             document.getElementById('formTitle').innerText = "Edit Data Sistem";
             document.querySelectorAll('.btn-cancel').forEach(btn => btn.style.display = 'block');
             
             if(item.Tipe === 'Pemasukan') {
                 new bootstrap.Tab(document.getElementById('tab-btn-masuk')).show();
                 const form = document.getElementById('formPemasukan');
-                form.tanggal.value = item.Tanggal.substring(0, 10);
+                if(item.Tanggal) form.tanggal.value = item.Tanggal.substring(0, 10);
                 form.keterangan.value = item.Keterangan;
                 form.nominal.value = formatRupiahText(item.Nominal);
                 document.getElementById('editFileHintMasuk').classList.remove('d-none');
             } else if (item.Tipe === 'Kebutuhan') {
                 new bootstrap.Tab(document.getElementById('tab-btn-kebutuhan')).show();
                 const form = document.getElementById('formKebutuhan');
-                form.tanggal.value = item.Tanggal.substring(0, 7);
+                if(item.Tanggal) form.tanggal.value = item.Tanggal.substring(0, 7);
                 form.keterangan.value = item.Keterangan;
                 form.nominal.value = formatRupiahText(item.Nominal);
             }
@@ -687,16 +731,14 @@
 
         async function submitForm(e, tipe) {
             e.preventDefault();
-            if (!GAS_API_URL || GAS_API_URL === '') return Swal.fire('Error', 'Silakan isi variabel GAS_API_URL di script terlebih dahulu.', 'error');
+            if (!GAS_API_URL || GAS_API_URL === '') return Swal.fire('Error', 'Isi variabel GAS_API_URL', 'error');
 
             const form = e.target;
-            const btn = form.querySelector('.btn-submit');
-            
             const rawNominal = form.nominal.value.replace(/[^0-9]/g, '');
             if(!rawNominal || parseInt(rawNominal) <= 0) return Swal.fire('Error Input', 'Nominal harus berupa angka valid.', 'warning');
             
             let dateVal = form.tanggal.value;
-            if(dateVal.length === 7) dateVal += "-01"; 
+            if(dateVal.length === 7) dateVal += "-01"; // Pelengkap standar DB
 
             let payload = {
                 id: editId, tipe: tipe, tanggal: dateVal,
@@ -707,47 +749,54 @@
             const fileInput = form.querySelector('input[type="file"]');
             if (fileInput && fileInput.files.length > 0) {
                 const file = fileInput.files[0];
-                if(file.size > 2 * 1024 * 1024) return Swal.fire('File Kebesaran', 'Maks ukuran 2MB.', 'warning');
-                Toast.fire({ icon: 'info', title: 'Mempersiapkan data...' });
+                if(file.size > 2 * 1024 * 1024) return Swal.fire('File Kebesaran', 'Maksimal 2MB.', 'warning');
                 payload.fileData = await toBase64(file);
                 payload.fileName = file.name;
             }
 
-            // Langsung update layar tanpa memblokir aplikasi
-            let tempItem = { ...payload };
-            if (!tempItem.id) tempItem.ID = "TEMP-" + Date.now(); 
-            else tempItem.ID = tempItem.id;
-            if (payload.fileData) tempItem.Bukti_URL = "Uploading...";
-            
-            if (editId) {
-                let idx = db.findIndex(x => x.ID === editId);
-                if(idx > -1) db[idx] = { ...db[idx], ...tempItem };
-            } else {
-                db.push(tempItem);
-            }
-            
-            processDataAndRender();
-            cancelEdit();
-            Toast.fire({ icon: 'info', title: 'Menyimpan di latar belakang...' });
+            // Tampilkan Layar Loader di tengah (Tidak ada Toast di pojok)
+            showActionLoader();
 
-            fetch(GAS_API_URL, {
-                method: 'POST',
-                body: JSON.stringify({ action: 'save', data: payload }),
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(res => {
+            // Kirim ke Backend
+            try {
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST', body: JSON.stringify({ action: 'save', data: payload }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                const res = await response.json();
+                hideActionLoader();
+                
                 if(res.status === 'success') {
-                    Toast.fire({ icon: 'success', title: 'Data berhasil tersimpan.' });
-                    silentSync(); 
+                    // Update Local Data (Pastikan KEY Kapital Persis dengan Respon Backend untuk hindari Error 404/Substring)
+                    let tempItem = {
+                        ID: payload.id ? payload.id : "TEMP-" + Date.now(),
+                        Tipe: payload.tipe,
+                        Tanggal: payload.tanggal, 
+                        Nominal: payload.nominal,
+                        Keterangan: payload.keterangan,
+                        Bukti_URL: payload.fileData ? "Uploaded" : (editId ? db.find(x=>x.ID===editId).Bukti_URL : "")
+                    };
+                    
+                    if (editId) {
+                        let idx = db.findIndex(x => x.ID === editId);
+                        if(idx > -1) db[idx] = { ...db[idx], ...tempItem };
+                    } else { db.push(tempItem); }
+                    
+                    cancelEdit(); // Reset form agar siap input data berikutnya seketika
+                    processDataAndRender();
+                    refreshDataSilent(); // Ambil ID permanen dari Server diam-diam
                 } else {
-                    Toast.fire({ icon: 'error', title: 'Gagal Menyimpan' });
-                    silentSync(); 
+                    Swal.fire('Gagal Menyimpan', res.message, 'error');
                 }
-            }).catch(err => {
-                Toast.fire({ icon: 'error', title: 'Koneksi terputus.' });
-                silentSync();
-            });
+            } catch (err) {
+                hideActionLoader();
+                Swal.fire('Koneksi Terputus', 'Periksa jaringan internet anda.', 'error');
+            }
         }
 
+        // ---------------------------------------------
+        // UTILS
+        // ---------------------------------------------
         function formatCurrency(input) {
             let value = input.value.replace(/[^0-9]/g, '');
             input.value = value ? "Rp " + parseInt(value, 10).toLocaleString('id-ID') : "";
@@ -764,7 +813,6 @@
             document.querySelectorAll('input[type="month"]:not(#filterStart):not(#filterEnd)').forEach(el => el.value = `${yyyy}-${mm}`);
         }
         const toBase64 = file => new Promise((res, rej) => { const r = new FileReader(); r.readAsDataURL(file); r.onload = () => res(r.result); r.onerror = e => rej(e); });
-
     </script>
 </body>
 </html>
