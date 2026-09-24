@@ -10,19 +10,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-     
+    
     <style>
         :root {
             --bg-color: #f4f7fb;
             --surface: #ffffff;
-            /* Tema Warna Biru Modern */
             --primary: #2563EB;
             --primary-gradient: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: rgba(203, 213, 225, 0.6);
             
-            /* Status Colors (Soft) */
+            /* Status Colors */
             --sisa-green: #10b981;
             --sisa-blue: #3b82f6;
             --sisa-red: #ef4444;
@@ -36,7 +35,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Glassmorphism Cards */
         .glass-card {
             background: var(--surface);
             border-radius: 24px;
@@ -47,7 +45,6 @@
             margin-bottom: 24px;
         }
         
-        /* Typography & Gradients */
         .gradient-text {
             background: var(--primary-gradient);
             -webkit-background-clip: text;
@@ -55,7 +52,7 @@
             font-weight: 800;
         }
 
-        /* Navigation */
+        /* Navigasi */
         .top-nav { display: none; }
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
@@ -83,7 +80,6 @@
             body { padding-bottom: 0; }
         }
 
-        /* Form Inputs & Buttons */
         .form-control, .form-select {
             border-radius: 14px; border: 1px solid var(--border-color);
             padding: 14px 16px; font-weight: 500; background: #f8fafc;
@@ -93,6 +89,29 @@
             background: #fff; border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
+        
+        /* Modern Select untuk Grafik */
+        .select-grafik {
+            appearance: none;
+            background-color: rgba(37, 99, 235, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 10px 40px 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232563EB' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 14px;
+        }
+        .select-grafik:hover, .select-grafik:focus {
+            background-color: rgba(37, 99, 235, 0.1);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+
         .btn-modern {
             background: var(--primary-gradient); border: none;
             color: white; border-radius: 14px; padding: 14px 24px;
@@ -100,7 +119,6 @@
         }
         .btn-modern:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3); color: white; }
         
-        /* Table Rekap Styling (Modern) */
         .table-modern { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
         .table-modern th { 
             background: transparent; color: var(--text-muted); 
@@ -116,15 +134,13 @@
         .table-modern tbody tr { box-shadow: 0 2px 5px rgba(0,0,0,0.01); transition: transform 0.2s; }
         .table-modern tbody tr:hover { transform: scale(1.01); box-shadow: 0 8px 20px rgba(0,0,0,0.04); z-index: 1; position: relative; }
 
-        /* Status Badges (Sisa Kebutuhan) */
         .status-badge {
-            padding: 8px 16px; border-radius: 10px; font-weight: 800; font-size: 0.9rem; display: inline-block;
+            padding: 8px 16px; border-radius: 10px; font-weight: 800; display: inline-block;
         }
         .status-green { background: var(--sisa-green); color: white; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
         .status-blue { background: var(--sisa-blue); color: white; box-shadow: 0 4px 10px rgba(59,130,246,0.3); }
         .status-red { background: var(--sisa-red); color: white; box-shadow: 0 4px 10px rgba(239,68,68,0.3); }
 
-        /* Loader & Animations */
         .tab-content-area { display: none; animation: fadeIn 0.4s ease; }
         .tab-content-area.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -132,7 +148,6 @@
 </head>
 <body>
 
-    <!-- Desktop Nav -->
     <nav class="navbar navbar-expand-lg top-nav py-3">
         <div class="container">
             <a class="navbar-brand fs-4 fw-bolder" href="#">
@@ -140,8 +155,8 @@
                 <span class="gradient-text ms-1">Kafalah Dai</span>
             </a>
             <div class="d-flex ms-auto gap-3">
-                <button class="btn btn-light rounded-pill px-4 fw-bold" onclick="trySwitchTab('rekap')">Rekap</button>
-                <button class="btn btn-light rounded-pill px-4 fw-bold" onclick="trySwitchTab('riwayat')">Riwayat</button>
+                <button class="btn btn-light rounded-pill px-4 fw-bold shadow-sm" onclick="trySwitchTab('rekap')">Rekap</button>
+                <button class="btn btn-light rounded-pill px-4 fw-bold shadow-sm" onclick="trySwitchTab('riwayat')">Riwayat</button>
                 <button class="btn btn-modern rounded-pill px-4" onclick="trySwitchTab('input')"><i class="bi bi-plus-lg me-1"></i> Input Data</button>
             </div>
         </div>
@@ -149,9 +164,7 @@
 
     <div class="container mt-3 mb-5 pb-5">
         
-        <!-- =================== TAB REKAP =================== -->
         <div id="tab-rekap" class="tab-content-area active">
-            <!-- Filter Date Range -->
             <div class="glass-card mb-4 p-3 p-md-4">
                 <div class="row g-3 align-items-end">
                     <div class="col-6 col-md-5">
@@ -170,7 +183,6 @@
                 </div>
             </div>
 
-            <!-- Tabel Rekap -->
             <div class="glass-card table-responsive p-4">
                 <h5 class="fw-bold mb-4 text-main"><i class="bi bi-table text-primary me-2"></i>Tabel Rekapitulasi</h5>
                 <table class="table-modern">
@@ -180,16 +192,16 @@
                             <th width="15%">Bulan</th>
                             <th width="10%" class="text-center">Jml Dai</th>
                             <th width="20%" class="text-end">Kebutuhan Dana</th>
-                            <th width="20%" class="text-end">Dana Masuk</th>
-                            <th width="30%" class="text-end">Sisa Kebutuhan</th>
+                            <th width="25%" class="text-end">Dana Masuk</th>
+                            <th width="25%" class="text-end">Sisa Kebutuhan</th>
                         </tr>
                     </thead>
                     <tbody id="rekapTableBody">
-                        <!-- Disuntikkan lewat JS -->
                     </tbody>
                     <tfoot>
                         <tr><td colspan="6"><hr class="text-muted opacity-25"></td></tr>
-                        <tr class="fw-bolder fs-5 bg-light rounded-4">
+                        <!-- Menyamakan ukuran font data (fs-6), dan membesarkan footer (fs-5) -->
+                        <tr class="fw-bolder fs-5 bg-light rounded-4 shadow-sm">
                             <td colspan="3" class="text-end text-muted p-3 rounded-start-4">TOTAL KESELURUHAN</td>
                             <td class="text-end text-danger p-3" id="totKebutuhan">Rp 0</td>
                             <td class="text-end text-primary p-3" id="totMasuk">Rp 0</td>
@@ -199,14 +211,16 @@
                 </table>
             </div>
 
-            <!-- Grafik Visual -->
             <div class="glass-card mt-4 p-4">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-                    <h5 class="fw-bold m-0 text-main"><i class="bi bi-bar-chart-fill text-primary me-2"></i>Grafik Arus Dana</h5>
-                    <select id="chartFilter" class="form-select w-auto fw-bold" onchange="renderDashboard()">
+                    <h5 class="fw-bold m-0 text-main" id="chartTitle">
+                        <i class="bi bi-bar-chart-fill text-primary me-2"></i>Kebutuhan dan Dana Masuk
+                    </h5>
+                    <!-- Dropdown Grafik Dipercantik -->
+                    <select id="chartFilter" class="select-grafik" onchange="renderDashboard()">
                         <option value="all">Kebutuhan dan Dana Masuk</option>
-                        <option value="kebutuhan">Kebutuhan</option>
-                        <option value="pemasukan">Dana Masuk</option>
+                        <option value="kebutuhan">Kebutuhan Saja</option>
+                        <option value="pemasukan">Dana Masuk Saja</option>
                         <option value="dai">Jumlah Dai</option>
                     </select>
                 </div>
@@ -216,7 +230,6 @@
             </div>
         </div>
 
-        <!-- =================== TAB RIWAYAT =================== -->
         <div id="tab-riwayat" class="tab-content-area">
             <div class="glass-card p-4">
                 <h4 class="fw-bold mb-4 gradient-text">Riwayat Transaksi</h4>
@@ -233,26 +246,24 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            <!-- Populated by JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- =================== TAB INPUT DATA =================== -->
         <div id="tab-input" class="tab-content-area">
             <div class="glass-card p-4" style="max-width: 700px; margin: 0 auto;">
                 <h4 class="fw-bold mb-4 gradient-text text-center" id="formTitle">Manajemen Data</h4>
                 
                 <ul class="nav nav-pills nav-fill mb-4 p-2 bg-light rounded-4 border" id="pills-tab" role="tablist">
                   <li class="nav-item-form me-2 flex-fill" role="presentation">
-                    <button class="nav-link active w-100 rounded-3 fw-bold py-3" data-bs-toggle="pill" data-bs-target="#pills-masuk" type="button" id="tab-btn-masuk">
+                    <button class="nav-link active w-100 rounded-3 fw-bold py-3 shadow-sm" data-bs-toggle="pill" data-bs-target="#pills-masuk" type="button" id="tab-btn-masuk">
                         <i class="bi bi-box-arrow-in-down"></i> Input Dana Masuk
                     </button>
                   </li>
                   <li class="nav-item-form flex-fill" role="presentation">
-                    <button class="nav-link w-100 rounded-3 fw-bold py-3" data-bs-toggle="pill" data-bs-target="#pills-kebutuhan" type="button" id="tab-btn-kebutuhan">
+                    <button class="nav-link w-100 rounded-3 fw-bold py-3 shadow-sm" data-bs-toggle="pill" data-bs-target="#pills-kebutuhan" type="button" id="tab-btn-kebutuhan">
                         <i class="bi bi-calculator"></i> Input Kebutuhan Dana
                     </button>
                   </li>
@@ -260,7 +271,6 @@
 
                 <div class="tab-content mt-2" id="pills-tabContent">
                     
-                    <!-- FORM: DANA MASUK -->
                     <div class="tab-pane fade show active" id="pills-masuk" role="tabpanel">
                         <form id="formPemasukan" onsubmit="submitForm(event, 'Pemasukan')">
                             <div class="row g-4">
@@ -287,7 +297,6 @@
                         </form>
                     </div>
 
-                    <!-- FORM: KEBUTUHAN -->
                     <div class="tab-pane fade" id="pills-kebutuhan" role="tabpanel">
                         <form id="formKebutuhan" onsubmit="submitForm(event, 'Kebutuhan')">
                             <div class="row g-4">
@@ -303,7 +312,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label text-muted small fw-bold">Total Nominal Kafalah (Rp)</label>
+                                    <label class="form-label text-muted small fw-bold">Total Kebutuhan Dana (Rp)</label>
                                     <input type="text" inputmode="numeric" class="form-control fs-4 fw-bold text-primary" name="nominal" placeholder="0" required oninput="formatCurrency(this)">
                                 </div>
                             </div>
@@ -317,7 +326,6 @@
         </div>
     </div>
 
-    <!-- Mobile Nav -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="trySwitchTab('rekap')" id="nav-rekap">
             <i class="bi bi-grid-fill"></i><span>Rekap</span>
@@ -333,26 +341,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // ==========================================
-        // KONFIGURASI API (WAJIB DIISI)
-        // ==========================================
         const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyIsY0hZm9BjaQh96q_eu-EUOyioCW6bnGWHNTpZP5rj5K2ITEp_btHqIsfy3uWtxogoQ/exec'; // MASUKKAN URL APP SCRIPT ANDA DISINI
 
-        // Global State
+        // GLOBAL FAIL-SAFE: Inisialisasi wajib sebagai Array kosong, mencegah `.length` error
         let db = [];
         let chartInstance = null;
-        let isAuthenticated = false; // Kunci tab admin (Kode: lajnah)
+        let isAuthenticated = false; 
         let editId = null;
 
         const Toast = Swal.mixin({
             toast: true, position: 'top-end', showConfirmButton: false, timer: 2500, timerProgressBar: true
         });
 
-        // Inisialisasi Aplikasi (Tanpa layar loading penuh)
         document.addEventListener("DOMContentLoaded", () => {
             setDefaultDates();
-            
-            // Set Filter: Jan 2026 s/d Bulan Saat Ini
             const now = new Date();
             let mm = String(now.getMonth() + 1).padStart(2, '0');
             document.getElementById('filterStart').value = `2026-01`;
@@ -361,25 +363,39 @@
             loadData();
         });
 
-        // Fetch Data Latar Belakang
         async function loadData() {
-            if (!GAS_API_URL) return;
+            // Jika link kosong, mencegah fetch ke URL Github yang memicu error HTML 404
+            if (!GAS_API_URL || GAS_API_URL === '') {
+                console.warn("URL API Kosong. Menunggu pengisian...");
+                processDataAndRender();
+                return;
+            }
+
             try {
                 const response = await fetch(GAS_API_URL + "?action=getData");
-                db = await response.json();
+                if (!response.ok) throw new Error("Gagal mengambil data dari server");
+                
+                const data = await response.json();
+                
+                // Mencegah error jika kembalian server bukan berupa Array
+                db = Array.isArray(data) ? data : []; 
                 processDataAndRender();
             } catch (error) {
-                console.error("Fetch Error:", error);
-                Toast.fire({ icon: 'error', title: 'Gagal mengambil data' });
+                console.error("Koneksi Database Gagal:", error);
+                db = []; // Fail-safe
+                processDataAndRender();
+                Toast.fire({ icon: 'error', title: 'Belum terhubung ke Database' });
             }
         }
         
         async function silentSync() {
+            if (!GAS_API_URL || GAS_API_URL === '') return;
             try {
                 const response = await fetch(GAS_API_URL + "?action=getData");
-                db = await response.json();
+                const data = await response.json();
+                db = Array.isArray(data) ? data : [];
                 processDataAndRender();
-            } catch (e) { console.error("Silent sync failed"); }
+            } catch (e) { console.error("Sinkronisasi latar belakang gagal"); }
         }
 
         function processDataAndRender() {
@@ -391,7 +407,15 @@
             let startFilter = document.getElementById('filterStart').value; 
             let endFilter = document.getElementById('filterEnd').value;
             let chartFilterType = document.getElementById('chartFilter').value;
+            let chartTitleElement = document.getElementById('chartTitle');
 
+            // Set Judul Grafik Sesuai Filter
+            if (chartFilterType === 'all') chartTitleElement.innerHTML = `<i class="bi bi-bar-chart-fill text-primary me-2"></i>Kebutuhan dan Dana Masuk`;
+            else if (chartFilterType === 'kebutuhan') chartTitleElement.innerHTML = `<i class="bi bi-bar-chart-fill text-danger me-2"></i>Kebutuhan Dana`;
+            else if (chartFilterType === 'pemasukan') chartTitleElement.innerHTML = `<i class="bi bi-bar-chart-fill text-primary me-2"></i>Dana Masuk`;
+            else if (chartFilterType === 'dai') chartTitleElement.innerHTML = `<i class="bi bi-people-fill text-success me-2"></i>Grafik Jumlah Dai`;
+
+            // Filter Berdasarkan Bulan
             let filteredDb = db.filter(item => {
                 if(!item.Tanggal) return false;
                 let dateStr = item.Tanggal.substring(0, 7); 
@@ -400,15 +424,13 @@
                 return true;
             });
 
-            // Agregasi Data
             let monthlyData = {};
             filteredDb.forEach(item => {
                 let nom = parseInt(item.Nominal) || 0;
-                // Pengamanan zona waktu saat parse string
-                let safeDate = item.Tanggal.length === 10 ? item.Tanggal + "T12:00:00" : item.Tanggal;
-                let tglObj = new Date(safeDate);
                 let monthKey = item.Tanggal.substring(0, 7);
-                let monthName = tglObj.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+                // Extract tanpa zona waktu agar bulan tidak mundur
+                let [yyyy, mm] = monthKey.split('-');
+                let monthName = new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
                 
                 if(!monthlyData[monthKey]) monthlyData[monthKey] = { name: monthName, kebutuhan: 0, masuk: 0, jmlDai: 0 };
 
@@ -429,14 +451,18 @@
 
             sortedKeys.forEach((key, index) => {
                 let d = monthlyData[key];
-                // Sisa Kebutuhan = Kebutuhan - Masuk
+                
+                // Rumus Valid: Kebutuhan - Masuk
                 let sisa = d.kebutuhan - d.masuk;
                 
                 totalK += d.kebutuhan;
                 totalM += d.masuk;
                 totalSisa += sisa;
 
-                // Logika Warna: Kebutuhan > Masuk (Merah), Pas (Biru), Surplus (Hijau). Tanpa tanda +/-
+                // Logika Warna Final:
+                // Kebutuhan > Masuk -> Minus Dana -> MERAH
+                // Kebutuhan == Masuk -> Pas -> BIRU
+                // Masuk > Kebutuhan -> Surplus -> HIJAU
                 let sisaBadge = '';
                 if(sisa > 0) sisaBadge = `<span class="status-badge status-red">${formatRupiahText(sisa)}</span>`;
                 else if (sisa === 0) sisaBadge = `<span class="status-badge status-blue">Rp 0</span>`;
@@ -445,16 +471,17 @@
                 let tr = `
                     <tr>
                         <td class="text-muted fw-bold">${index + 1}</td>
-                        <td class="fw-bolder text-main">${d.name.toUpperCase()}</td>
-                        <td class="text-center fw-bold text-main">${d.jmlDai}</td>
-                        <td class="text-end fw-bold text-danger">${formatRupiahText(d.kebutuhan)}</td>
-                        <td class="text-end fw-bold text-primary">${formatRupiahText(d.masuk)}</td>
-                        <td class="text-end">${sisaBadge}</td>
+                        <td class="fw-bolder text-main text-uppercase">${d.name}</td>
+                        <td class="text-center fw-bold fs-6">${d.jmlDai}</td>
+                        <td class="text-end fw-bold text-danger fs-6">${formatRupiahText(d.kebutuhan)}</td>
+                        <td class="text-end fw-bold text-primary fs-6">${formatRupiahText(d.masuk)}</td>
+                        <td class="text-end fs-6">${sisaBadge}</td>
                     </tr>
                 `;
                 tbody.insertAdjacentHTML('beforeend', tr);
 
-                chartLabels.push(new Date(key + '-01T12:00:00').toLocaleDateString('id-ID', { month: 'short', year: '2-digit' }));
+                let [y, m] = key.split('-');
+                chartLabels.push(new Date(y, m-1).toLocaleDateString('id-ID', { month: 'short', year: '2-digit' }));
                 dataKebutuhan.push(d.kebutuhan);
                 dataMasuk.push(d.masuk);
                 dataDai.push(d.jmlDai);
@@ -462,7 +489,7 @@
 
             if (sortedKeys.length === 0) tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-5 fw-bold">Belum ada data pada rentang waktu ini.</td></tr>';
 
-            // Total Keseluruhan
+            // Menghitung Total
             document.getElementById('totKebutuhan').innerText = formatRupiahText(totalK);
             document.getElementById('totMasuk').innerText = formatRupiahText(totalM);
             
@@ -472,7 +499,6 @@
             else totBadge = `<span class="status-badge status-green text-white">${formatRupiahText(Math.abs(totalSisa))}</span>`;
             document.getElementById('totSisa').innerHTML = totBadge;
 
-            // Render Chart
             let datasets = [];
             let chartStepSize = 50000000;
             let chartCallback = function(value) { return 'Rp ' + (value/1000000) + ' Jt'; };
@@ -485,7 +511,7 @@
             }
             if(chartFilterType === 'dai') {
                 datasets.push({ label: 'Jumlah Dai', data: dataDai, backgroundColor: 'rgba(16, 185, 129, 0.9)', borderRadius: 8, maxBarThickness: 45 });
-                chartStepSize = 50; // Skala kelipatan 50 untuk Dai
+                chartStepSize = 50; // Skala kelipatan 50 untuk Grafik Jumlah Dai
                 chartCallback = function(value) { return value; };
             }
 
@@ -519,7 +545,8 @@
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
             
-            let filteredData = [...db].sort((a, b) => new Date(b.Tanggal) - new Date(a.Tanggal));
+            // Urutkan data berdasarkan string tanggal, karena format YYYY-MM-DD aman untuk disortir string
+            let filteredData = [...db].sort((a, b) => b.Tanggal.localeCompare(a.Tanggal));
 
             filteredData.forEach(item => {
                 let badgeClass = item.Tipe === 'Pemasukan' ? 'bg-primary bg-opacity-10 text-primary' : 'bg-danger bg-opacity-10 text-danger';
@@ -527,13 +554,17 @@
                     `<a href="${item.Bukti_URL}" target="_blank" class="btn btn-sm btn-light py-1 px-2 rounded-3 text-primary border"><i class="bi bi-image"></i> Lihat</a>` : 
                     '<span class="text-muted small">-</span>';
                 
-                // Mencegah tanggal mundur dgn T12:00:00
-                let safeDate = item.Tanggal.length === 10 ? item.Tanggal + "T12:00:00" : item.Tanggal;
-                let dObj = new Date(safeDate);
+                // Pemecahan string murni agar zona waktu browser lokal tidak mengurangi hari
+                let tglRaw = item.Tanggal.substring(0, 10);
+                let [yyyy, mm, dd] = tglRaw.split('-');
+                let dateDisplay = '';
                 
-                let dateDisplay = item.Tipe === 'Kebutuhan' ? 
-                    dObj.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }) : 
-                    dObj.toLocaleDateString('id-ID', { day:'numeric', month: 'short', year: 'numeric' });
+                if (item.Tipe === 'Kebutuhan') {
+                    dateDisplay = new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+                } else {
+                    dateDisplay = `${parseInt(dd)} ${new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'short' })} ${yyyy}`;
+                }
+
                 let detailSuffix = item.Tipe === 'Kebutuhan' ? ' Dai' : '';
 
                 let row = `
@@ -553,17 +584,16 @@
             });
         }
 
-        // Sistem Proteksi Akses (Lajnah Password)
         async function authGuard() {
             if (isAuthenticated) return true;
             const { value: code } = await Swal.fire({
                 title: 'Akses Terkunci', 
                 input: 'password', 
                 inputPlaceholder: 'Masukkan Kode Akses',
-                html: '<small class="text-muted">Gunakan sandi <b>lajnah</b> untuk otorisasi.</small>',
                 showCancelButton: true, confirmButtonText: 'Buka Akses', cancelButtonText: 'Batal',
                 confirmButtonColor: '#2563EB', customClass: { popup: 'rounded-4' }
             });
+            // Tidak ada lagi hint teks "Gunakan sandi lajnah..."
             if (code === 'lajnah') {
                 isAuthenticated = true; return true;
             } else if (code) {
@@ -588,21 +618,19 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ACTION: HAPUS
         async function deleteAction(id) {
             if (!await authGuard()) return;
+            if (!GAS_API_URL || GAS_API_URL === '') return Swal.fire('Error', 'API Belum Tersambung', 'error');
             
             Swal.fire({
                 title: 'Hapus Transaksi?', text: "Tindakan ini tidak dapat dibatalkan.", icon: 'warning',
                 showCancelButton: true, confirmButtonColor: '#ef4444', confirmButtonText: 'Ya, Hapus!'
             }).then((res) => {
                 if(res.isConfirmed) {
-                    // 1. Optimistic Delete (Langsung hilang di layar)
                     db = db.filter(x => x.ID !== id);
                     processDataAndRender();
                     Toast.fire({ icon: 'info', title: 'Menghapus data di server...' });
 
-                    // 2. Background Sync
                     fetch(GAS_API_URL, {
                         method: 'POST',
                         body: JSON.stringify({ action: 'delete', id: id }),
@@ -612,12 +640,13 @@
                             Toast.fire({ icon: 'success', title: 'Data terhapus permanen.' });
                             silentSync(); 
                         } else { Toast.fire({ icon: 'error', title: 'Gagal dihapus.' }); silentSync(); }
+                    }).catch(e => {
+                        Toast.fire({ icon: 'error', title: 'Jaringan Error.' });
                     });
                 }
             });
         }
 
-        // ACTION: EDIT
         async function editAction(id) {
             if (!await authGuard()) return;
             
@@ -656,9 +685,10 @@
             setDefaultDates();
         }
 
-        // ACTION: SIMPAN (OPTIMISTIC UI)
         async function submitForm(e, tipe) {
             e.preventDefault();
+            if (!GAS_API_URL || GAS_API_URL === '') return Swal.fire('Error', 'Silakan isi variabel GAS_API_URL di script terlebih dahulu.', 'error');
+
             const form = e.target;
             const btn = form.querySelector('.btn-submit');
             
@@ -678,19 +708,15 @@
             if (fileInput && fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 if(file.size > 2 * 1024 * 1024) return Swal.fire('File Kebesaran', 'Maks ukuran 2MB.', 'warning');
-                Toast.fire({ icon: 'info', title: 'Mempersiapkan gambar...' });
+                Toast.fire({ icon: 'info', title: 'Mempersiapkan data...' });
                 payload.fileData = await toBase64(file);
                 payload.fileName = file.name;
             }
 
-            btn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Menyimpan...`;
-            btn.disabled = true;
-
-            // 1. Optimistic Update (Tampilkan di UI langsung)
+            // Langsung update layar tanpa memblokir aplikasi
             let tempItem = { ...payload };
             if (!tempItem.id) tempItem.ID = "TEMP-" + Date.now(); 
             else tempItem.ID = tempItem.id;
-            
             if (payload.fileData) tempItem.Bukti_URL = "Uploading...";
             
             if (editId) {
@@ -702,33 +728,26 @@
             
             processDataAndRender();
             cancelEdit();
-            Toast.fire({ icon: 'info', title: 'Menyimpan ke server latar belakang...' });
+            Toast.fire({ icon: 'info', title: 'Menyimpan di latar belakang...' });
 
-            // 2. Kirim Background API
             fetch(GAS_API_URL, {
                 method: 'POST',
                 body: JSON.stringify({ action: 'save', data: payload }),
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' }
             }).then(r => r.json()).then(res => {
-                btn.disabled = false;
-                btn.innerHTML = tipe === 'Pemasukan' ? "Simpan Dana Masuk" : "Simpan Kebutuhan Kafalah";
-                
                 if(res.status === 'success') {
-                    Toast.fire({ icon: 'success', title: 'Data tersimpan.' });
-                    silentSync(); // Tarik data valid dgn timestamp asli
+                    Toast.fire({ icon: 'success', title: 'Data berhasil tersimpan.' });
+                    silentSync(); 
                 } else {
                     Toast.fire({ icon: 'error', title: 'Gagal Menyimpan' });
-                    silentSync(); // Revert ke data asli jika gagal
+                    silentSync(); 
                 }
             }).catch(err => {
-                btn.disabled = false;
-                btn.innerHTML = tipe === 'Pemasukan' ? "Simpan Dana Masuk" : "Simpan Kebutuhan Kafalah";
                 Toast.fire({ icon: 'error', title: 'Koneksi terputus.' });
                 silentSync();
             });
         }
 
-        // Helpers Utilities
         function formatCurrency(input) {
             let value = input.value.replace(/[^0-9]/g, '');
             input.value = value ? "Rp " + parseInt(value, 10).toLocaleString('id-ID') : "";
