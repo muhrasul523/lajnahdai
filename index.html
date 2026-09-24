@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kafalah Dai 2026</title>
-    <!-- Modern Fonts & Frameworks -->
+    <!-- Modern Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -13,14 +13,13 @@
     
     <style>
         :root {
-            --bg-color: #f4f7fb;
+            --bg-color: #f0f4f8;
             --surface: #ffffff;
-            /* Perubahan Tema Warna ke Biru Modern */
-            --primary: #2563EB;
-            --primary-gradient: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+            --primary: #4F46E5;
+            --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
             --text-main: #1e293b;
             --text-muted: #64748b;
-            --border-color: rgba(203, 213, 225, 0.6);
+            --border-color: rgba(226, 232, 240, 0.8);
             
             /* Status Colors (Soft) */
             --sisa-green: #10b981;
@@ -39,12 +38,13 @@
         /* Glassmorphism Cards */
         .glass-card {
             background: var(--surface);
-            border-radius: 24px;
-            box-shadow: 0 10px 40px -10px rgba(37, 99, 235, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px -10px rgba(79, 70, 229, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             padding: 24px;
             margin-bottom: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         /* Typography & Gradients */
@@ -59,7 +59,7 @@
         .top-nav { display: none; }
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
             border-top: 1px solid var(--border-color);
             display: flex; justify-content: space-around;
@@ -72,12 +72,12 @@
         }
         .nav-item i { font-size: 1.4rem; margin-bottom: 4px; }
         .nav-item span { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
-        .nav-item.active { background: var(--primary-gradient); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25); }
+        .nav-item.active { background: var(--primary-gradient); color: white; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3); }
 
         @media (min-width: 768px) {
             .bottom-nav { display: none; }
             .top-nav {
-                display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(15px);
+                display: flex; background: rgba(255,255,255,0.9); backdrop-filter: blur(15px);
                 box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 30px; position: sticky; top: 0; z-index: 1000;
             }
             body { padding-bottom: 0; }
@@ -85,75 +85,79 @@
 
         /* Form Inputs & Buttons */
         .form-control, .form-select {
-            border-radius: 14px; border: 1px solid var(--border-color);
-            padding: 14px 16px; font-weight: 500; background: #f8fafc;
+            border-radius: 12px; border: 1px solid var(--border-color);
+            padding: 12px 16px; font-weight: 500; background: #f8fafc;
             transition: all 0.2s;
         }
         .form-control:focus, .form-select:focus {
             background: #fff; border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
         .btn-modern {
             background: var(--primary-gradient); border: none;
-            color: white; border-radius: 14px; padding: 14px 24px;
-            font-weight: 700; letter-spacing: 0.5px; transition: all 0.3s;
+            color: white; border-radius: 12px; padding: 12px 24px;
+            font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s;
         }
-        .btn-modern:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3); color: white; }
+        .btn-modern:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3); color: white; }
         
-        /* Table Rekap Styling (Modern) */
+        /* Table Rekap Styling */
         .table-modern { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
         .table-modern th { 
             background: transparent; color: var(--text-muted); 
-            font-weight: 700; text-transform: uppercase; font-size: 0.75rem; 
+            font-weight: 600; text-transform: uppercase; font-size: 0.75rem; 
             letter-spacing: 1px; padding: 0 16px 8px 16px; border: none;
         }
         .table-modern td {
-            background: #ffffff; padding: 18px 16px; border: none;
-            vertical-align: middle; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9;
+            background: #ffffff; padding: 16px; border: none;
+            vertical-align: middle;
         }
-        .table-modern tr td:first-child { border-radius: 16px 0 0 16px; border-left: 1px solid #f1f5f9; }
-        .table-modern tr td:last-child { border-radius: 0 16px 16px 0; border-right: 1px solid #f1f5f9; }
-        .table-modern tbody tr { box-shadow: 0 2px 5px rgba(0,0,0,0.01); transition: transform 0.2s; }
-        .table-modern tbody tr:hover { transform: scale(1.01); box-shadow: 0 8px 20px rgba(0,0,0,0.04); z-index: 1; position: relative; }
+        .table-modern tr td:first-child { border-radius: 12px 0 0 12px; }
+        .table-modern tr td:last-child { border-radius: 0 12px 12px 0; }
+        .table-modern tbody tr { box-shadow: 0 2px 10px rgba(0,0,0,0.02); transition: transform 0.2s; }
+        .table-modern tbody tr:hover { transform: scale(1.01); box-shadow: 0 5px 15px rgba(0,0,0,0.05); z-index: 1; position: relative; }
 
         /* Status Badges */
         .status-badge {
-            padding: 8px 16px; border-radius: 10px; font-weight: 800; font-size: 0.9rem; display: inline-block;
+            padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; display: inline-block;
         }
-        .status-green { background: #10b981; color: white; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
-        .status-blue { background: #3b82f6; color: white; box-shadow: 0 4px 10px rgba(59,130,246,0.3); }
-        .status-red { background: #ef4444; color: white; box-shadow: 0 4px 10px rgba(239,68,68,0.3); }
+        .status-green { background: rgba(16, 185, 129, 0.1); color: var(--sisa-green); }
+        .status-blue { background: rgba(59, 130, 246, 0.1); color: var(--sisa-blue); }
+        .status-red { background: rgba(239, 68, 68, 0.1); color: var(--sisa-red); }
 
         /* Loader & Animations */
-        .tab-content-area { display: none; animation: fadeIn 0.4s ease; }
-        .tab-content-area.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content { display: none; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .tab-content.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
         #loader {
-            position: fixed; inset: 0; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px);
+            position: fixed; inset: 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px);
             z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        
+        .tab-content { display: none; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .tab-content.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .date-filter-box {
+            background: rgba(255, 255, 255, 0.6); border-radius: 16px; padding: 16px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
 <body>
 
-    <!-- Loader -->
-    <div id="loader">
-        <div class="spinner-border" style="color: var(--primary); width: 3.5rem; height: 3.5rem;" role="status"></div>
-        <h5 id="loader-text" class="mt-3 fw-bold text-muted">Memuat Data...</h5>
-    </div>
-
     <!-- Desktop Nav -->
     <nav class="navbar navbar-expand-lg top-nav py-3">
         <div class="container">
             <a class="navbar-brand fs-4" href="#">
-                <i class="bi bi-layers-half text-primary"></i> 
-                <span class="gradient-text ms-1">Kafalah Dai</span>
+                <i class="bi bi-layers-half" style="color: var(--primary)"></i> 
+                <span class="gradient-text">Kafalah Dai</span>
             </a>
             <div class="d-flex ms-auto gap-3">
-                <button class="btn btn-light rounded-pill px-4 fw-bold" onclick="trySwitchTab('rekap')">Rekap</button>
-                <button class="btn btn-light rounded-pill px-4 fw-bold" onclick="trySwitchTab('riwayat')">Riwayat</button>
-                <button class="btn btn-modern rounded-pill px-4" onclick="trySwitchTab('input')"><i class="bi bi-plus-lg me-1"></i> Input Data</button>
+                <button class="btn btn-light rounded-pill px-4" onclick="switchTab('rekap')">Rekap</button>
+                <button class="btn btn-light rounded-pill px-4" onclick="switchTab('riwayat')">Riwayat</button>
+                <button class="btn btn-modern rounded-pill px-4" onclick="switchTab('input')"><i class="bi bi-plus-lg me-1"></i> Input Data</button>
             </div>
         </div>
     </nav>
@@ -161,64 +165,68 @@
     <div class="container mt-3 mb-5 pb-5">
         
         <!-- =================== TAB REKAP =================== -->
-        <div id="tab-rekap" class="tab-content-area active">
-            <!-- Filter Date Range -->
-            <div class="glass-card mb-4 p-3 p-md-4">
+        <div id="tab-rekap" class="tab-content active">
+            
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+                <h3 class="fw-bold gradient-text m-0">Dashboard Keuangan</h3>
+            </div>
+
+            <!-- Filter Rentang Waktu -->
+            <div class="date-filter-box mb-4">
                 <div class="row g-3 align-items-end">
-                    <div class="col-6 col-md-5">
+                    <div class="col-md-4">
                         <label class="form-label text-muted fw-bold small text-uppercase">Mulai Bulan</label>
-                        <input type="month" id="filterStart" class="form-control fw-bold" onchange="renderDashboard()">
+                        <input type="month" id="filterStart" class="form-control" onchange="renderDashboard()">
                     </div>
-                    <div class="col-6 col-md-5">
+                    <div class="col-md-4">
                         <label class="form-label text-muted fw-bold small text-uppercase">Sampai Bulan</label>
-                        <input type="month" id="filterEnd" class="form-control fw-bold" onchange="renderDashboard()">
+                        <input type="month" id="filterEnd" class="form-control" onchange="renderDashboard()">
                     </div>
-                    <div class="col-12 col-md-2">
+                    <div class="col-md-4">
                         <button class="btn btn-modern w-100" onclick="renderDashboard()">
-                            <i class="bi bi-funnel-fill"></i> Filter
+                            <i class="bi bi-funnel-fill me-1"></i> Terapkan Filter
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Tabel Rekap -->
-            <div class="glass-card table-responsive p-4">
-                <h5 class="fw-bold mb-4 text-main"><i class="bi bi-table text-primary me-2"></i>Tabel Rekapitulasi</h5>
+            <!-- Table Rekap Bulanan -->
+            <div class="glass-card table-responsive">
+                <h5 class="fw-bold mb-4">Tabel Rekapitulasi</h5>
                 <table class="table-modern">
                     <thead>
                         <tr>
                             <th width="5%">No</th>
-                            <th width="20%">Bulan</th>
+                            <th width="15%">Bulan</th>
                             <th width="15%" class="text-center">Jml Dai</th>
                             <th width="20%" class="text-end">Kebutuhan Dana</th>
                             <th width="20%" class="text-end">Dana Masuk</th>
-                            <th width="20%" class="text-end">Sisa</th>
+                            <th width="25%" class="text-end">Sisa Kebutuhan</th>
                         </tr>
                     </thead>
                     <tbody id="rekapTableBody">
-                        <!-- Disuntikkan lewat JS -->
+                        <!-- Populated by JS -->
                     </tbody>
                     <tfoot>
-                        <tr><td colspan="6"><hr class="text-muted opacity-25"></td></tr>
-                        <tr class="fw-bolder fs-5 bg-light rounded-4">
-                            <td colspan="3" class="text-end text-muted p-3 rounded-start-4">TOTAL KESELURUHAN</td>
-                            <td class="text-end text-danger p-3" id="totKebutuhan">Rp 0</td>
-                            <td class="text-end text-primary p-3" id="totMasuk">Rp 0</td>
-                            <td class="text-end p-3 rounded-end-4" id="totSisa">Rp 0</td>
+                        <tr><td colspan="5"><hr class="text-muted opacity-25"></td></tr>
+                        <tr class="fw-bold fs-5">
+                            <td colspan="2" class="text-end text-muted">TOTAL KESELURUHAN:</td>
+                            <td class="text-end text-warning" id="totKebutuhan">Rp 0</td>
+                            <td class="text-end text-success" id="totMasuk">Rp 0</td>
+                            <td class="text-end" id="totSisa">Rp 0</td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
 
-            <!-- Grafik Visual -->
-            <div class="glass-card mt-4 p-4">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-                    <h5 class="fw-bold m-0 text-main"><i class="bi bi-bar-chart-fill text-primary me-2"></i>Grafik Arus Dana</h5>
-                    <select id="chartFilter" class="form-select w-auto fw-bold" onchange="renderDashboard()">
-                        <option value="all">Kebutuhan dan Dana Masuk</option>
-                        <option value="kebutuhan">Kebutuhan</option>
-                        <option value="pemasukan">Dana Masuk</option>
-                        <option value="dai">Jumlah Dai</option>
+            <!-- Grafik -->
+            <div class="glass-card mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold m-0">Grafik Arus Dana</h5>
+                    <select id="chartFilter" class="form-select w-auto" onchange="renderDashboard()">
+                        <option value="all">Tampilkan Keduanya</option>
+                        <option value="kebutuhan">Kebutuhan Saja</option>
+                        <option value="pemasukan">Dana Masuk Saja</option>
                     </select>
                 </div>
                 <div style="height: 350px;">
@@ -228,14 +236,33 @@
         </div>
 
         <!-- =================== TAB RIWAYAT =================== -->
-        <div id="tab-riwayat" class="tab-content-area">
-            <div class="glass-card p-4">
-                <h4 class="fw-bold mb-4 gradient-text">Riwayat Transaksi</h4>
+        <div id="tab-riwayat" class="tab-content">
+            <div class="glass-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-bold m-0 gradient-text">Riwayat Transaksi</h4>
+                    <button class="btn btn-outline-secondary rounded-pill" onclick="exportCSV()">
+                        <i class="bi bi-download me-1"></i> Export
+                    </button>
+                </div>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <select id="filterTipe" class="form-select" onchange="renderTable()">
+                            <option value="">Semua Tipe</option>
+                            <option value="Pemasukan">Dana Masuk</option>
+                            <option value="Kebutuhan">Kebutuhan</option>
+                        </select>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Cari keterangan, sumber dana, atau nominal..." onkeyup="renderTable()">
+                    </div>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table-modern w-100 align-middle">
                         <thead>
                             <tr>
-                                <th>Tanggal</th>
+                                <th>Waktu</th>
                                 <th>Tipe</th>
                                 <th>Detail (Sumber/Dai)</th>
                                 <th class="text-end">Nominal</th>
@@ -251,61 +278,58 @@
             </div>
         </div>
 
-        <!-- =================== TAB INPUT DATA =================== -->
-        <div id="tab-input" class="tab-content-area">
-            <div class="glass-card p-4" style="max-width: 700px; margin: 0 auto;">
-                <h4 class="fw-bold mb-4 gradient-text text-center" id="formTitle">Manajemen Data</h4>
+        <!-- =================== TAB INPUT =================== -->
+        <div id="tab-input" class="tab-content">
+            <div class="glass-card" style="max-width: 700px; margin: 0 auto;">
                 
-                <!-- Pills Navigation: Pastikan ID nya match agar Bootstrap JS berfungsi memunculkan content -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-bold m-0 gradient-text" id="formTitle">Manajemen Data</h4>
+                </div>
+                
+                <!-- Pills Navigation -->
                 <ul class="nav nav-pills nav-fill mb-4 p-2 bg-light rounded-4 border" id="pills-tab" role="tablist">
                   <li class="nav-item-form me-2 flex-fill" role="presentation">
-                    <button class="nav-link active w-100 rounded-3 fw-bold py-3" data-bs-toggle="pill" data-bs-target="#pills-masuk" type="button" id="tab-btn-masuk">
-                        <i class="bi bi-box-arrow-in-down"></i> Input Dana Masuk
-                    </button>
+                    <button class="nav-link active w-100 rounded-3 fw-bold" data-bs-toggle="pill" data-bs-target="#pills-masuk" type="button" id="tab-btn-masuk">Dana Masuk</button>
                   </li>
                   <li class="nav-item-form flex-fill" role="presentation">
-                    <button class="nav-link w-100 rounded-3 fw-bold py-3" data-bs-toggle="pill" data-bs-target="#pills-kebutuhan" type="button" id="tab-btn-kebutuhan">
-                        <i class="bi bi-calculator"></i> Input Kebutuhan Dana
-                    </button>
+                    <button class="nav-link w-100 rounded-3 fw-bold" data-bs-toggle="pill" data-bs-target="#pills-kebutuhan" type="button" id="tab-btn-kebutuhan">Kebutuhan (Kafalah)</button>
                   </li>
                 </ul>
 
-                <!-- Wrapper konten Tab Bootstrap (Memastikan form muncul) -->
-                <div class="tab-content mt-2" id="pills-tabContent">
-                    
-                    <!-- FORM: DANA MASUK -->
-                    <div class="tab-pane fade show active" id="pills-masuk" role="tabpanel">
+                <div class="tab-content mt-2">
+                    <!-- Form Pemasukan -->
+                    <div class="tab-pane fade show active" id="pills-masuk">
                         <form id="formPemasukan" onsubmit="submitForm(event, 'Pemasukan')">
-                            <div class="row g-4">
-                                <div class="col-md-6">
-                                    <label class="form-label text-muted small fw-bold">Sumber Dana</label>
-                                    <input type="text" class="form-control" name="keterangan" value="WIZ" placeholder="Contoh: WIZ, Donatur..." required>
-                                </div>
+                            <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label text-muted small fw-bold">Tanggal Masuk</label>
                                     <input type="date" class="form-control" name="tanggal" required>
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted small fw-bold">Sumber Dana</label>
+                                    <input type="text" class="form-control" name="keterangan" placeholder="Contoh: WIZ, Donatur Hamba Allah" required>
+                                </div>
                                 <div class="col-12">
-                                    <label class="form-label text-muted small fw-bold">Nominal Masuk (Rp)</label>
+                                    <label class="form-label text-muted small fw-bold">Nominal (Rp)</label>
                                     <input type="text" inputmode="numeric" class="form-control fs-4 fw-bold text-primary" name="nominal" placeholder="0" required oninput="formatCurrency(this)">
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label text-muted small fw-bold">Upload Bukti Transfer / Nota (Opsional)</label>
+                                    <label class="form-label text-muted small fw-bold">Bukti Transfer (Opsional)</label>
                                     <input type="file" class="form-control" name="file" accept="image/*">
-                                    <small class="text-muted d-none mt-1" id="editFileHintMasuk">Abaikan jika tidak mengubah bukti gambar.</small>
+                                    <small class="text-muted d-none mt-1" id="editFileHintMasuk">Biarkan kosong jika tidak ingin mengubah bukti gambar saat ini.</small>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-modern w-100 mt-4 btn-submit">Simpan Dana Masuk</button>
-                            <button type="button" class="btn btn-light w-100 mt-2 btn-cancel fw-bold text-danger" style="display:none" onclick="cancelEdit()">Batal Edit</button>
+                            <button type="submit" class="btn btn-modern w-100 mt-4 btn-submit">Simpan Pemasukan</button>
+                            <button type="button" class="btn btn-light w-100 mt-2 btn-cancel fw-bold" style="display:none" onclick="cancelEdit()">Batal Edit</button>
                         </form>
                     </div>
 
-                    <!-- FORM: KEBUTUHAN KAFALAH -->
-                    <div class="tab-pane fade" id="pills-kebutuhan" role="tabpanel">
+                    <!-- Form Kebutuhan -->
+                    <div class="tab-pane fade" id="pills-kebutuhan">
                         <form id="formKebutuhan" onsubmit="submitForm(event, 'Kebutuhan')">
-                            <div class="row g-4">
+                            <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label text-muted small fw-bold">Bulan & Tahun</label>
+                                    <label class="form-label text-muted small fw-bold">Bulan & Tahun Kafalah</label>
                                     <input type="month" class="form-control" name="tanggal" required>
                                 </div>
                                 <div class="col-md-6">
@@ -316,15 +340,14 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label text-muted small fw-bold">Total Nominal Kafalah (Rp)</label>
+                                    <label class="form-label text-muted small fw-bold">Total Kebutuhan Dana (Rp)</label>
                                     <input type="text" inputmode="numeric" class="form-control fs-4 fw-bold text-primary" name="nominal" placeholder="0" required oninput="formatCurrency(this)">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-modern w-100 mt-4 btn-submit">Simpan Kebutuhan Kafalah</button>
-                            <button type="button" class="btn btn-light w-100 mt-2 btn-cancel fw-bold text-danger" style="display:none" onclick="cancelEdit()">Batal Edit</button>
+                            <button type="submit" class="btn btn-modern w-100 mt-4 btn-submit">Simpan Kebutuhan</button>
+                            <button type="button" class="btn btn-light w-100 mt-2 btn-cancel fw-bold" style="display:none" onclick="cancelEdit()">Batal Edit</button>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -332,52 +355,51 @@
 
     <!-- Mobile Nav -->
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="trySwitchTab('rekap')" id="nav-rekap">
+        <div class="nav-item active" onclick="switchTab('rekap')" id="nav-rekap">
             <i class="bi bi-grid-fill"></i><span>Rekap</span>
         </div>
-        <div class="nav-item" onclick="trySwitchTab('riwayat')" id="nav-riwayat">
+        <div class="nav-item" onclick="switchTab('riwayat')" id="nav-riwayat">
             <i class="bi bi-clock-history"></i><span>Riwayat</span>
         </div>
-        <div class="nav-item" onclick="trySwitchTab('input')" id="nav-input">
+        <div class="nav-item" onclick="switchTab('input')" id="nav-input">
             <i class="bi bi-plus-circle-fill"></i><span>Input</span>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script>
-        // ==========================================
-        // KONFIGURASI API (WAJIB DIISI)
-        // Masukkan URL Google Apps Script Web App Anda disini:
-        // ==========================================
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyIsY0hZm9BjaQh96q_eu-EUOyioCW6bnGWHNTpZP5rj5K2ITEp_btHqIsfy3uWtxogoQ/exec'; // Contoh: 'https://script.google.com/macros/s/AKfyc.../exec'
-
         // Global State
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyIsY0hZm9BjaQh96q_eu-EUOyioCW6bnGWHNTpZP5rj5K2ITEp_btHqIsfy3uWtxogoQ/exec'; // ISI URL DEPLOY GAS ANDA DISINI
         let db = [];
         let chartInstance = null;
-        let isAuthenticated = false; // Kunci tab admin (Kode: lajnah)
+        let isAuthenticated = false;
         let editId = null;
 
-        // Inisialisasi Aplikasi
+        // Konfigurasi SweetAlert Toast untuk Notifikasi Cepat
+        const Toast = Swal.mixin({
+            toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true
+        });
+
+        // Inisialisasi
         document.addEventListener("DOMContentLoaded", () => {
             setDefaultDates();
             
-            // Set Default Filter Rentang Waktu (Januari 2026 s/d Bulan Saat Ini)
+            // Set Default Filter Rentang Waktu (Januari tahun ini s/d Bulan Ini)
             const now = new Date();
+            const yyyy = now.getFullYear();
             let mm = String(now.getMonth() + 1).padStart(2, '0');
-            document.getElementById('filterStart').value = `2026-01`; // Default diminta user
-            document.getElementById('filterEnd').value = `${now.getFullYear()}-${mm}`; // Current month
+            document.getElementById('filterStart').value = `${yyyy}-01`;
+            document.getElementById('filterEnd').value = `${yyyy}-${mm}`;
 
             loadData();
         });
 
-        // ==========================================
-        // FUNGSI KOMUNIKASI DATABASE / API FETCH
-        // ==========================================
+        // Load awal data tanpa memblokir UI
         async function loadData() {
-            showLoader("Menghubungkan ke server...");
-            
-            // Memanggil API via GET
+            if (!GAS_API_URL) {
+                console.warn("GAS_API_URL belum diisi.");
+                return;
+            }
             try {
                 const response = await fetch(GAS_API_URL + "?action=getData");
                 const result = await response.json();
@@ -385,30 +407,18 @@
                 processDataAndRender();
             } catch (error) {
                 console.error("Fetch Error:", error);
-                Swal.fire('Koneksi Gagal', 'Gagal memuat data dari Spreadsheet. Pastikan URL API sudah benar.', 'error');
-            } finally {
-                hideLoader();
+                Toast.fire({ icon: 'error', title: 'Gagal memuat database.' });
             }
         }
-
-        async function saveToDatabase(payload) {
-            const response = await fetch(GAS_API_URL, {
-                method: 'POST',
-                body: JSON.stringify({ action: 'save', data: payload }),
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' } // text/plain menghindari CORS preflight issues
-            });
-            return await response.json();
+        
+        // Memuat ulang data di latar belakang
+        async function silentSync() {
+            try {
+                const response = await fetch(GAS_API_URL + "?action=getData");
+                db = await response.json();
+                processDataAndRender();
+            } catch (error) { console.error("Silent sync failed"); }
         }
-
-        async function deleteFromDatabase(id) {
-            const response = await fetch(GAS_API_URL, {
-                method: 'POST',
-                body: JSON.stringify({ action: 'delete', id: id }),
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            });
-            return await response.json();
-        }
-
 
         function processDataAndRender() {
             renderDashboard();
@@ -420,29 +430,31 @@
             let endFilter = document.getElementById('filterEnd').value;
             let chartFilterType = document.getElementById('chartFilter').value;
 
+            // Filter data sesuai rentang bulan
             let filteredDb = db.filter(item => {
-                if(!item.Tanggal) return false;
-                let dateStr = item.Tanggal.substring(0, 7); 
+                let dateStr = item.Tanggal.substring(0, 7); // Format "YYYY-MM"
                 if (startFilter && dateStr < startFilter) return false;
                 if (endFilter && dateStr > endFilter) return false;
                 return true;
             });
 
-            // Agregasi Data Per Bulan
+            // Agregasi Bulanan
             let monthlyData = {};
             filteredDb.forEach(item => {
                 let nom = parseInt(item.Nominal) || 0;
                 let tglObj = new Date(item.Tanggal);
+                if (isNaN(tglObj.getTime())) return;
+                
                 let monthKey = item.Tanggal.substring(0, 7);
                 let monthName = tglObj.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
                 
-                if(!monthlyData[monthKey]) monthlyData[monthKey] = { name: monthName, kebutuhan: 0, masuk: 0, jmlDai: 0 };
+                if(!monthlyData[monthKey]) {
+                    monthlyData[monthKey] = { name: monthName, kebutuhan: 0, masuk: 0 };
+                }
 
                 if(item.Tipe === 'Kebutuhan') {
                     monthlyData[monthKey].kebutuhan += nom;
-                    monthlyData[monthKey].jmlDai += parseInt(item.Keterangan) || 0;
-                }
-                else if (item.Tipe === 'Pemasukan') {
+                } else if (item.Tipe === 'Pemasukan') {
                     monthlyData[monthKey].masuk += nom;
                 }
             });
@@ -452,73 +464,82 @@
             tbody.innerHTML = '';
             
             let totalK = 0; let totalM = 0; let totalSisa = 0;
-            let chartLabels = []; let dataKebutuhan = []; let dataMasuk = []; let dataDai = [];
+            let chartLabels = []; let dataKebutuhan = []; let dataMasuk = [];
 
             sortedKeys.forEach((key, index) => {
                 let d = monthlyData[key];
+                
+                // Kalkulasi Sisa: Kebutuhan - Masuk
                 let sisa = d.kebutuhan - d.masuk;
                 
                 totalK += d.kebutuhan;
                 totalM += d.masuk;
                 totalSisa += sisa;
 
-                // Logika Warna: Minus (Merah), Lunas/0 (Biru), Nunggak/>0 (Hijau)
+                // Logika Warna Sisa: > 0 (Merah), == 0 (Biru), < 0 (Hijau)
                 let sisaBadge = '';
-                if(sisa > 0) sisaBadge = `<span class="status-badge status-green">+ ${formatRupiahText(sisa)}</span>`;
-                else if (sisa === 0) sisaBadge = `<span class="status-badge status-blue">Rp 0</span>`;
-                else sisaBadge = `<span class="status-badge status-red">- ${formatRupiahText(Math.abs(sisa))}</span>`;
+                if(sisa > 0) {
+                    sisaBadge = `<span class="status-badge status-red">${formatRupiahText(sisa)}</span>`;
+                } else if (sisa === 0) {
+                    sisaBadge = `<span class="status-badge status-blue">Rp 0</span>`;
+                } else {
+                    // Masuk > Kebutuhan (Surplus)
+                    sisaBadge = `<span class="status-badge status-green">${formatRupiahText(Math.abs(sisa))}</span>`;
+                }
 
+                // Render Baris Tabel
                 let tr = `
                     <tr>
                         <td class="text-muted fw-bold">${index + 1}</td>
-                        <td class="fw-bolder text-main">${d.name.toUpperCase()}</td>
-                        <td class="text-center fw-bold text-main">${d.jmlDai}</td>
-                        <td class="text-end fw-bold text-danger">${formatRupiahText(d.kebutuhan)}</td>
-                        <td class="text-end fw-bold text-primary">${formatRupiahText(d.masuk)}</td>
+                        <td class="fw-bold">${d.name}</td>
+                        <td class="text-end fw-bold text-warning">${formatRupiahText(d.kebutuhan)}</td>
+                        <td class="text-end fw-bold text-success">${formatRupiahText(d.masuk)}</td>
                         <td class="text-end">${sisaBadge}</td>
                     </tr>
                 `;
                 tbody.insertAdjacentHTML('beforeend', tr);
 
+                // Setup Array Chart
                 chartLabels.push(new Date(key + '-01').toLocaleDateString('id-ID', { month: 'short', year: '2-digit' }));
                 dataKebutuhan.push(d.kebutuhan);
                 dataMasuk.push(d.masuk);
-                dataDai.push(d.jmlDai);
             });
 
-            if (sortedKeys.length === 0) tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-5 fw-bold">Belum ada data pada rentang waktu ini.</td></tr>';
+            if (sortedKeys.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">Belum ada data pada rentang waktu ini.</td></tr>';
+            }
 
-            // Totals
+            // Update Total di Footer Table
             document.getElementById('totKebutuhan').innerText = formatRupiahText(totalK);
             document.getElementById('totMasuk').innerText = formatRupiahText(totalM);
             
             let totBadge = '';
-            if(totalSisa > 0) totBadge = `<span class="status-badge status-green text-white">+ ${formatRupiahText(totalSisa)}</span>`;
-            else if (totalSisa === 0) totBadge = `<span class="status-badge status-blue text-white">Rp 0</span>`;
-            else totBadge = `<span class="status-badge status-red text-white">- ${formatRupiahText(Math.abs(totalSisa))}</span>`;
+            if(totalSisa > 0) totBadge = `<span class="status-badge status-red">${formatRupiahText(totalSisa)}</span>`;
+            else if (totalSisa === 0) totBadge = `<span class="status-badge status-blue">Rp 0</span>`;
+            else totBadge = `<span class="status-badge status-green">${formatRupiahText(Math.abs(totalSisa))}</span>`;
             document.getElementById('totSisa').innerHTML = totBadge;
 
-            // Render Chart
             let datasets = [];
-            let chartStepSize = 50000000;
-            let chartCallback = function(value) { return 'Rp ' + (value/1000000) + ' Jt'; };
-
             if(chartFilterType === 'all' || chartFilterType === 'kebutuhan') {
-                datasets.push({ label: 'Kebutuhan Dana', data: dataKebutuhan, backgroundColor: 'rgba(239, 68, 68, 0.9)', borderRadius: 8, maxBarThickness: 45 });
+                datasets.push({ 
+                    label: 'Kebutuhan Dana', data: dataKebutuhan, 
+                    backgroundColor: 'rgba(245, 158, 11, 0.8)', borderRadius: 6, maxBarThickness: 40 
+                });
             }
             if(chartFilterType === 'all' || chartFilterType === 'pemasukan') {
-                datasets.push({ label: 'Dana Masuk', data: dataMasuk, backgroundColor: 'rgba(37, 99, 235, 0.9)', borderRadius: 8, maxBarThickness: 45 });
-            }
-            if(chartFilterType === 'dai') {
-                datasets.push({ label: 'Jumlah Dai', data: dataDai, backgroundColor: 'rgba(16, 185, 129, 0.9)', borderRadius: 8, maxBarThickness: 45 });
-                chartStepSize = 50;
-                chartCallback = function(value) { return value + ' Orang'; };
+                datasets.push({ 
+                    label: 'Dana Masuk', data: dataMasuk, 
+                    backgroundColor: 'rgba(16, 185, 129, 0.8)', borderRadius: 6, maxBarThickness: 40 
+                });
             }
 
             const ctx = document.getElementById('financeChart').getContext('2d');
-            if(chartInstance) chartInstance.destroy(); 
+            if(chartInstance) { chartInstance.destroy(); }
             
+            // Konfigurasi Chart Modern
             Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+            Chart.defaults.color = '#64748b';
+
             chartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: { labels: chartLabels, datasets: datasets },
@@ -526,19 +547,18 @@
                     responsive: true, maintainAspectRatio: false,
                     interaction: { mode: 'index', intersect: false },
                     plugins: {
-                        legend: { position: 'bottom', labels: { usePointStyle: true, font: {weight: 'bold'} } },
-                        tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.9)', padding: 12, cornerRadius: 10 }
+                        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
+                        tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.9)', padding: 12, cornerRadius: 8 }
                     },
                     scales: { 
                         x: { grid: { display: false } },
                         y: { 
                             beginAtZero: true, 
                             border: { display: false },
-                            grid: { color: 'rgba(203, 213, 225, 0.4)' },
+                            grid: { color: 'rgba(226, 232, 240, 0.5)' },
                             ticks: { 
-                                stepSize: chartStepSize,
-                                callback: chartCallback,
-                                font: { weight: 'bold' }
+                                stepSize: 50000000, // Kelipatan 50 Juta
+                                callback: function(value) { return 'Rp ' + (value/1000000) + ' Jt'; } 
                             } 
                         } 
                     }
@@ -548,32 +568,51 @@
 
         function renderTable() {
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
+            const filterTipe = document.getElementById('filterTipe').value;
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
             
-            // Sort by Date Descending
+            tbody.innerHTML = '';
             let filteredData = [...db].sort((a, b) => new Date(b.Tanggal) - new Date(a.Tanggal));
 
+            filteredData = filteredData.filter(item => {
+                const matchTipe = filterTipe === "" || item.Tipe === filterTipe;
+                const matchSearch = (item.Keterangan && item.Keterangan.toString().toLowerCase().includes(searchInput)) || 
+                                    (item.Nominal && item.Nominal.toString().includes(searchInput));
+                return matchTipe && matchSearch;
+            });
+
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">Pencarian tidak ditemukan.</td></tr>';
+                return;
+            }
+
             filteredData.forEach(item => {
-                let badgeClass = item.Tipe === 'Pemasukan' ? 'bg-primary bg-opacity-10 text-primary' : 'bg-danger bg-opacity-10 text-danger';
+                let badgeClass = item.Tipe === 'Pemasukan' ? 'bg-success bg-opacity-25 text-success' : 'bg-warning bg-opacity-25 text-warning';
+                
+                // Tambahkan T12:00:00 agar parsial tanggal tidak mundur ke hari sebelumnya akibat penyesuaian zona waktu lokal browser
+                let safeDate = item.Tanggal.length === 10 ? item.Tanggal + "T12:00:00" : item.Tanggal;
+                let dObj = new Date(safeDate);
+                
                 let linkBukti = item.Bukti_URL ? 
-                    `<a href="${item.Bukti_URL}" target="_blank" class="btn btn-sm btn-light py-1 px-2 rounded-3 text-primary border"><i class="bi bi-image"></i> Lihat</a>` : 
+                    `<a href="${item.Bukti_URL}" target="_blank" class="btn btn-sm btn-light py-1 px-2 rounded-3 text-primary border"><i class="bi bi-image"></i> Bukti</a>` : 
                     '<span class="text-muted small">-</span>';
                 
                 let dateDisplay = item.Tipe === 'Kebutuhan' ? 
-                    new Date(item.Tanggal).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }) : 
-                    new Date(item.Tanggal).toLocaleDateString('id-ID', { day:'numeric', month: 'short', year: 'numeric' });
+                    dObj.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }) : 
+                    dObj.toLocaleDateString('id-ID', { day:'numeric', month: 'short', year: 'numeric' });
+
                 let detailSuffix = item.Tipe === 'Kebutuhan' ? ' Dai' : '';
 
                 let row = `
                     <tr>
                         <td class="text-nowrap text-muted fw-bold">${dateDisplay}</td>
-                        <td><span class="badge ${badgeClass} border-0 rounded-pill px-3 py-2 fs-6">${item.Tipe}</span></td>
-                        <td class="fw-bolder">${item.Keterangan}${detailSuffix}</td>
-                        <td class="text-end fw-bolder text-main fs-6">${formatRupiahText(item.Nominal)}</td>
+                        <td><span class="badge ${badgeClass} border-0 rounded-pill px-3 py-2">${item.Tipe}</span></td>
+                        <td class="fw-bold">${item.Keterangan}${detailSuffix}</td>
+                        <td class="text-end fw-bold text-main">${formatRupiahText(item.Nominal)}</td>
                         <td class="text-center">${linkBukti}</td>
                         <td class="text-center text-nowrap">
-                            <button class="btn btn-sm btn-light border text-primary rounded-circle me-1" onclick="editAction('${item.ID}')"><i class="bi bi-pencil-fill"></i></button>
-                            <button class="btn btn-sm btn-light border text-danger rounded-circle" onclick="deleteAction('${item.ID}')"><i class="bi bi-trash3-fill"></i></button>
+                            <button class="btn btn-sm btn-light text-primary rounded-circle me-1" onclick="editAction('${item.ID}')"><i class="bi bi-pencil-fill"></i></button>
+                            <button class="btn btn-sm btn-light text-danger rounded-circle" onclick="deleteAction('${item.ID}')"><i class="bi bi-trash3-fill"></i></button>
                         </td>
                     </tr>
                 `;
@@ -581,59 +620,56 @@
             });
         }
 
-        // Sistem Proteksi Akses (Lajnah Password)
+        // Auth Password System
         async function authGuard() {
             if (isAuthenticated) return true;
             const { value: code } = await Swal.fire({
-                title: 'Akses Terkunci', 
+                title: 'Otorisasi Required', 
                 input: 'password', 
-                inputPlaceholder: 'Masukkan Kode Akses',
-                html: '<small class="text-muted">Gunakan sandi <b>lajnah</b> untuk otorisasi.</small>',
-                showCancelButton: true, confirmButtonText: 'Buka Akses', cancelButtonText: 'Batal',
-                confirmButtonColor: '#2563EB',
+                inputPlaceholder: 'Masukkan Kode Akses Lajnah',
+                showCancelButton: true,
+                confirmButtonText: 'Buka Akses',
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#4F46E5',
                 customClass: { popup: 'rounded-4' }
             });
             if (code === 'lajnah') {
                 isAuthenticated = true;
                 return true;
             } else if (code) {
-                Swal.fire({title: 'Akses Ditolak', text: 'Kode sandi salah!', icon: 'error', confirmButtonColor: '#ef4444'});
+                Swal.fire('Akses Ditolak', 'Kode sandi salah!', 'error');
             }
             return false;
         }
 
-        async function trySwitchTab(tabId) {
-            // Jika mau ke halaman input tapi belum login, tahan dulu
-            if (tabId === 'input' && !isAuthenticated) {
-                const authed = await authGuard();
-                if(!authed) return; // Batal masuk tab
-            }
-            switchTabUI(tabId);
-        }
-
-        function switchTabUI(tabId) {
-            document.querySelectorAll('.tab-content-area').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById('tab-' + tabId).classList.add('active');
-            if(document.getElementById('nav-' + tabId)) document.getElementById('nav-' + tabId).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Action Buttons
         async function deleteAction(id) {
             if (!await authGuard()) return;
             
             Swal.fire({
-                title: 'Hapus Transaksi?', text: "Tindakan ini tidak dapat dibatalkan.", icon: 'warning',
+                title: 'Hapus Transaksi?', text: "Data riwayat ini akan dihapus permanen.", icon: 'warning',
                 showCancelButton: true, confirmButtonColor: '#ef4444', confirmButtonText: 'Ya, Hapus!'
-            }).then(async (res) => {
+            }).then((res) => {
                 if(res.isConfirmed) {
-                    showLoader('Menghapus...');
+                    // Update UI Instan (Optimistic UI)
+                    db = db.filter(x => x.ID !== id);
+                    processDataAndRender();
                     
-                    let result = await deleteFromDatabase(id);
-                    if(result.status === 'success') loadData();
-                    else { hideLoader(); Swal.fire('Gagal', result.message, 'error'); }
+                    // Eksekusi API Latar Belakang
+                    fetch(GAS_API_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({ action: 'delete', id: id }),
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                    })
+                    .then(r => r.json())
+                    .then(res => {
+                        if(res.status === 'success') {
+                            Toast.fire({ icon: 'success', title: 'Data terhapus!' });
+                            silentSync(); // Tarik data valid
+                        } else {
+                            Toast.fire({ icon: 'error', title: 'Gagal menghapus.' });
+                            silentSync(); // Kembalikan ke state asli jika gagal
+                        }
+                    });
                 }
             });
         }
@@ -645,7 +681,7 @@
             if(!item) return;
             
             editId = id;
-            switchTabUI('input');
+            switchTab('input');
             
             document.getElementById('formTitle').innerText = "Edit Data Sistem";
             document.querySelectorAll('.btn-cancel').forEach(btn => btn.style.display = 'block');
@@ -673,7 +709,6 @@
             document.getElementById('editFileHintMasuk').classList.add('d-none');
             document.getElementById('formPemasukan').reset();
             document.getElementById('formKebutuhan').reset();
-            document.getElementById('formPemasukan').keterangan.value = 'WIZ'; // reset default
             setDefaultDates();
         }
 
@@ -685,59 +720,145 @@
             const rawNominal = form.nominal.value.replace(/[^0-9]/g, '');
             if(!rawNominal || parseInt(rawNominal) <= 0) return Swal.fire('Error Input', 'Nominal harus berupa angka valid.', 'warning');
             
+            // Standardize month format for DB
             let dateVal = form.tanggal.value;
             if(dateVal.length === 7) dateVal += "-01"; 
 
             let payload = {
-                id: editId, tipe: tipe, tanggal: dateVal,
-                nominal: parseInt(rawNominal), keterangan: form.keterangan.value,
+                id: editId,
+                tipe: tipe,
+                tanggal: dateVal,
+                nominal: parseInt(rawNominal),
+                keterangan: form.keterangan.value,
                 fileData: null, fileName: null
             };
 
             const fileInput = form.querySelector('input[type="file"]');
             if (fileInput && fileInput.files.length > 0) {
                 const file = fileInput.files[0];
-                if(file.size > 2 * 1024 * 1024) return Swal.fire('File Kebesaran', 'Maks ukuran 2MB.', 'warning');
-                showLoader("Mempersiapkan Gambar...");
+                if(file.size > 2 * 1024 * 1024) return Swal.fire('File Terlalu Besar', 'Maksimal ukuran bukti transfer adalah 2MB.', 'warning');
+                
+                Toast.fire({ icon: 'info', title: 'Mempersiapkan gambar...' });
                 payload.fileData = await toBase64(file);
                 payload.fileName = file.name;
             }
 
+            // Kunci tombol sekejap
             btn.disabled = true;
-            showLoader("Menyimpan ke Server...");
+            btn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Menyimpan...`;
 
-            // Logic Simpan
-            let res = await saveToDatabase(payload);
-            btn.disabled = false;
-            if(res.status === 'success') {
-                Swal.fire({ title: 'Berhasil', text: 'Data disimpan', icon: 'success', customClass: { popup: 'rounded-4' } });
-                cancelEdit(); loadData(); switchTabUI('rekap');
+            // UPDATE UI INSTAN (Optimistic Update)
+            let tempItem = { ...payload };
+            if (!tempItem.ID) tempItem.ID = "TEMP-" + Date.now(); 
+            if (payload.fileData) tempItem.Bukti_URL = "Uploading...";
+
+            if (editId) {
+                let idx = db.findIndex(x => x.ID === editId);
+                if(idx > -1) db[idx] = { ...db[idx], ...tempItem };
             } else {
-                hideLoader(); Swal.fire('Gagal Menyimpan', res.message, 'error');
+                db.push(tempItem);
+            }
+            
+            // Proses Render Tabel Langsung
+            processDataAndRender();
+            cancelEdit(); // Kosongkan form seketika, agar admin bisa langsung ngetik lagi
+
+            // EKSEKUSI API LATAR BELAKANG
+            try {
+                const response = await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'save', data: payload }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                const res = await response.json();
+                
+                btn.disabled = false;
+                btn.innerHTML = tipe === 'Pemasukan' ? "Simpan Pemasukan" : "Simpan Kebutuhan";
+
+                if(res.status === 'success') {
+                    Toast.fire({ icon: 'success', title: 'Berhasil disimpan!' });
+                    silentSync(); // Tarik data bersih (dengan ID dan Timestamp Real dari server)
+                } else {
+                    Toast.fire({ icon: 'error', title: 'Gagal Menyimpan: ' + res.message });
+                    silentSync(); // Undo perubahan di UI lokal jika gagal
+                }
+            } catch (err) {
+                btn.disabled = false;
+                btn.innerHTML = tipe === 'Pemasukan' ? "Simpan Pemasukan" : "Simpan Kebutuhan";
+                Toast.fire({ icon: 'error', title: 'Koneksi terputus.' });
+                silentSync();
             }
         }
 
-        // Helpers Utilities
+        // Helpers
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            document.getElementById('nav-' + tabId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
         function formatCurrency(input) {
             let value = input.value.replace(/[^0-9]/g, '');
             input.value = value ? "Rp " + parseInt(value, 10).toLocaleString('id-ID') : "";
         }
+
         function formatRupiahText(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
+
         function setDefaultDates() {
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
             document.querySelectorAll('input[type="date"]').forEach(el => el.value = `${yyyy}-${mm}-${dd}`);
-            // Bulan di form kebutuhan defaultnya adalah bulan ini
-            document.querySelectorAll('input[type="month"]:not(#filterStart):not(#filterEnd)').forEach(el => el.value = `${yyyy}-${mm}`);
+            document.querySelectorAll('input[type="month"]').forEach(el => el.value = `${yyyy}-${mm}`);
         }
-        function showLoader(text) { document.getElementById('loader-text').innerText = text; document.getElementById('loader').style.display = 'flex'; }
-        function hideLoader() { document.getElementById('loader').style.display = 'none'; }
-        const toBase64 = file => new Promise((res, rej) => { const r = new FileReader(); r.readAsDataURL(file); r.onload = () => res(r.result); r.onerror = e => rej(e); });
 
+        function showLoader(text) {
+            document.getElementById('loader-text').innerText = text;
+            document.getElementById('loader').style.display = 'flex';
+        }
+        function hideLoader() { document.getElementById('loader').style.display = 'none'; }
+
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        function exportCSV() {
+            if(db.length === 0) return Swal.fire('Data Kosong', 'Tidak ada data untuk di ekspor.', 'info');
+            let csvContent = "data:text/csv;charset=utf-8,ID,Tipe,Tanggal,Nominal,Detail(Sumber/Dai)\n";
+            db.forEach(row => {
+                let d = new Date(row.Tanggal).toISOString().split('T')[0];
+                csvContent += `${row.ID},${row.Tipe},${d},${row.Nominal},"${row.Keterangan}"\n`;
+            });
+            const link = document.createElement("a");
+            link.setAttribute("href", encodeURI(csvContent));
+            link.setAttribute("download", "Export_Kafalah_2026.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function getDummyData() {
+            return [
+                { ID: "SIM-1", Tipe: "Kebutuhan", Tanggal: "2026-04-01", Nominal: 459416000, Keterangan: "300" },
+                { ID: "SIM-2", Tipe: "Pemasukan", Tanggal: "2026-04-15", Nominal: 450000000, Keterangan: "WIZ" },
+                { ID: "SIM-3", Tipe: "Kebutuhan", Tanggal: "2026-05-01", Nominal: 467582000, Keterangan: "310" },
+                { ID: "SIM-4", Tipe: "Pemasukan", Tanggal: "2026-05-20", Nominal: 310000000, Keterangan: "WIZ" },
+                { ID: "SIM-5", Tipe: "Kebutuhan", Tanggal: "2026-06-01", Nominal: 452375000, Keterangan: "298" },
+                { ID: "SIM-6", Tipe: "Pemasukan", Tanggal: "2026-06-10", Nominal: 320000000, Keterangan: "WIZ" },
+                { ID: "SIM-7", Tipe: "Kebutuhan", Tanggal: "2026-07-01", Nominal: 447430000, Keterangan: "290" },
+                { ID: "SIM-8", Tipe: "Pemasukan", Tanggal: "2026-07-15", Nominal: 240000000, Keterangan: "WIZ" },
+                { ID: "SIM-9", Tipe: "Kebutuhan", Tanggal: "2026-08-01", Nominal: 413392000, Keterangan: "280" },
+                { ID: "SIM-10", Tipe: "Pemasukan", Tanggal: "2026-08-20", Nominal: 40000000, Keterangan: "WIZ" }
+            ];
+        }
     </script>
 </body>
 </html>
