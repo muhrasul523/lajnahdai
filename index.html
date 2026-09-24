@@ -469,11 +469,15 @@
 
             // Agregasi Bulanan
             let monthlyData = {};
+            const namaBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
             filteredDb.forEach(item => {
                 let nom = parseInt(item.Nominal) || 0;
                 let monthKey = item.Tanggal.substring(0, 7);
                 let [yyyy, mm] = monthKey.split('-');
-                let monthName = new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+                
+                // MENGHINDARI BUG ZONA WAKTU: Ekstrak nama bulan secara manual
+                let monthName = `${namaBulan[parseInt(mm) - 1]} ${yyyy}`;
                 
                 if(!monthlyData[monthKey]) monthlyData[monthKey] = { name: monthName, kebutuhan: 0, masuk: 0, jmlDai: 0 };
 
@@ -597,17 +601,21 @@
                     `<a href="${item.Bukti_URL}" target="_blank" class="btn btn-sm btn-light py-1 px-2 rounded-3 text-primary border shadow-sm"><i class="bi bi-image"></i> Lihat</a>` : 
                     '<span class="text-muted small">-</span>';
                 
-                // PENCEGAHAN TANGGAL MUNDUR: Ekstrak secara mentah tanpa time zone
-                let tglRaw = '';
-                if(item.Tanggal) tglRaw = item.Tanggal.substring(0, 10);
-                
+                // PENCEGAHAN TANGGAL MUNDUR: Ekstrak secara mentah tanpa time zone (Menggunakan Array Statis)
+                let tglRaw = item.Tanggal ? item.Tanggal.substring(0, 10) : '';
                 let dateDisplay = '-';
+                
                 if(tglRaw && tglRaw.length === 10) {
                     let [yyyy, mm, dd] = tglRaw.split('-');
+                    let mIndex = parseInt(mm) - 1;
+                    const shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                    const longMonths = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                    
                     if (item.Tipe === 'Kebutuhan') {
-                        dateDisplay = new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+                        dateDisplay = `${longMonths[mIndex]} ${yyyy}`;
                     } else {
-                        dateDisplay = `${parseInt(dd)} ${new Date(yyyy, mm - 1).toLocaleDateString('id-ID', { month: 'short' })} ${yyyy}`;
+                        // Hasilnya akan selalu presisi seperti di Sheet: misal "24 Sep 2026"
+                        dateDisplay = `${parseInt(dd)} ${shortMonths[mIndex]} ${yyyy}`;
                     }
                 }
 
