@@ -189,18 +189,19 @@
                         <tr>
                             <th width="5%">No</th>
                             <th width="20%">Bulan</th>
-                            <th width="25%" class="text-end">Kebutuhan Dana</th>
-                            <th width="25%" class="text-end">Dana Masuk</th>
-                            <th width="25%" class="text-end">Sisa</th>
+                            <th width="15%" class="text-center">Jml Dai</th>
+                            <th width="20%" class="text-end">Kebutuhan Dana</th>
+                            <th width="20%" class="text-end">Dana Masuk</th>
+                            <th width="20%" class="text-end">Sisa</th>
                         </tr>
                     </thead>
                     <tbody id="rekapTableBody">
                         <!-- Disuntikkan lewat JS -->
                     </tbody>
                     <tfoot>
-                        <tr><td colspan="5"><hr class="text-muted opacity-25"></td></tr>
+                        <tr><td colspan="6"><hr class="text-muted opacity-25"></td></tr>
                         <tr class="fw-bolder fs-5 bg-light rounded-4">
-                            <td colspan="2" class="text-end text-muted p-3 rounded-start-4">TOTAL KESELURUHAN</td>
+                            <td colspan="3" class="text-end text-muted p-3 rounded-start-4">TOTAL KESELURUHAN</td>
                             <td class="text-end text-danger p-3" id="totKebutuhan">Rp 0</td>
                             <td class="text-end text-primary p-3" id="totMasuk">Rp 0</td>
                             <td class="text-end p-3 rounded-end-4" id="totSisa">Rp 0</td>
@@ -214,9 +215,10 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                     <h5 class="fw-bold m-0 text-main"><i class="bi bi-bar-chart-fill text-primary me-2"></i>Grafik Arus Dana</h5>
                     <select id="chartFilter" class="form-select w-auto fw-bold" onchange="renderDashboard()">
-                        <option value="all">Tampilkan Keduanya</option>
-                        <option value="kebutuhan">Grafik Kebutuhan Saja</option>
-                        <option value="pemasukan">Grafik Dana Masuk Saja</option>
+                        <option value="all">Kebutuhan dan Dana Masuk</option>
+                        <option value="kebutuhan">Kebutuhan</option>
+                        <option value="pemasukan">Dana Masuk</option>
+                        <option value="dai">Jumlah Dai</option>
                     </select>
                 </div>
                 <div style="height: 350px;">
@@ -348,7 +350,7 @@
         // KONFIGURASI API (WAJIB DIISI)
         // Masukkan URL Google Apps Script Web App Anda disini:
         // ==========================================
-        const GAS_API_URL = ''; // Contoh: 'https://script.google.com/macros/s/AKfyc.../exec'
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyIsY0hZm9BjaQh96q_eu-EUOyioCW6bnGWHNTpZP5rj5K2ITEp_btHqIsfy3uWtxogoQ/exec'; // Contoh: 'https://script.google.com/macros/s/AKfyc.../exec'
 
         // Global State
         let db = [];
@@ -375,16 +377,6 @@
         async function loadData() {
             showLoader("Menghubungkan ke server...");
             
-            // Jika URL kosong, jalankan mode simulasi Canvas
-            if (!GAS_API_URL || GAS_API_URL === '') {
-                setTimeout(() => {
-                    if(db.length === 0) db = getDummyData();
-                    processDataAndRender();
-                    hideLoader();
-                }, 800);
-                return;
-            }
-
             // Memanggil API via GET
             try {
                 const response = await fetch(GAS_API_URL + "?action=getData");
@@ -393,18 +385,13 @@
                 processDataAndRender();
             } catch (error) {
                 console.error("Fetch Error:", error);
-                Swal.fire('Koneksi Gagal', 'Gagal memuat data dari Spreadsheet.', 'error');
+                Swal.fire('Koneksi Gagal', 'Gagal memuat data dari Spreadsheet. Pastikan URL API sudah benar.', 'error');
             } finally {
                 hideLoader();
             }
         }
 
         async function saveToDatabase(payload) {
-            if (!GAS_API_URL || GAS_API_URL === '') {
-                // Simulasi Sukses di Canvas
-                return new Promise((resolve) => setTimeout(() => resolve({status: 'success'}), 800));
-            }
-            
             const response = await fetch(GAS_API_URL, {
                 method: 'POST',
                 body: JSON.stringify({ action: 'save', data: payload }),
@@ -414,7 +401,6 @@
         }
 
         async function deleteFromDatabase(id) {
-            if (!GAS_API_URL || GAS_API_URL === '') return {status: 'success'};
             const response = await fetch(GAS_API_URL, {
                 method: 'POST',
                 body: JSON.stringify({ action: 'delete', id: id }),
@@ -450,10 +436,15 @@
                 let monthKey = item.Tanggal.substring(0, 7);
                 let monthName = tglObj.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
                 
-                if(!monthlyData[monthKey]) monthlyData[monthKey] = { name: monthName, kebutuhan: 0, masuk: 0 };
+                if(!monthlyData[monthKey]) monthlyData[monthKey] = { name: monthName, kebutuhan: 0, masuk: 0, jmlDai: 0 };
 
-                if(item.Tipe === 'Kebutuhan') monthlyData[monthKey].kebutuhan += nom;
-                else if (item.Tipe === 'Pemasukan') monthlyData[monthKey].masuk += nom;
+                if(item.Tipe === 'Kebutuhan') {
+                    monthlyData[monthKey].kebutuhan += nom;
+                    monthlyData[monthKey].jmlDai += parseInt(item.Keterangan) || 0;
+                }
+                else if (item.Tipe === 'Pemasukan') {
+                    monthlyData[monthKey].masuk += nom;
+                }
             });
 
             const sortedKeys = Object.keys(monthlyData).sort();
@@ -461,7 +452,7 @@
             tbody.innerHTML = '';
             
             let totalK = 0; let totalM = 0; let totalSisa = 0;
-            let chartLabels = []; let dataKebutuhan = []; let dataMasuk = [];
+            let chartLabels = []; let dataKebutuhan = []; let dataMasuk = []; let dataDai = [];
 
             sortedKeys.forEach((key, index) => {
                 let d = monthlyData[key];
@@ -481,6 +472,7 @@
                     <tr>
                         <td class="text-muted fw-bold">${index + 1}</td>
                         <td class="fw-bolder text-main">${d.name.toUpperCase()}</td>
+                        <td class="text-center fw-bold text-main">${d.jmlDai}</td>
                         <td class="text-end fw-bold text-danger">${formatRupiahText(d.kebutuhan)}</td>
                         <td class="text-end fw-bold text-primary">${formatRupiahText(d.masuk)}</td>
                         <td class="text-end">${sisaBadge}</td>
@@ -491,9 +483,10 @@
                 chartLabels.push(new Date(key + '-01').toLocaleDateString('id-ID', { month: 'short', year: '2-digit' }));
                 dataKebutuhan.push(d.kebutuhan);
                 dataMasuk.push(d.masuk);
+                dataDai.push(d.jmlDai);
             });
 
-            if (sortedKeys.length === 0) tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-5 fw-bold">Belum ada data pada rentang waktu ini.</td></tr>';
+            if (sortedKeys.length === 0) tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-5 fw-bold">Belum ada data pada rentang waktu ini.</td></tr>';
 
             // Totals
             document.getElementById('totKebutuhan').innerText = formatRupiahText(totalK);
@@ -507,11 +500,19 @@
 
             // Render Chart
             let datasets = [];
+            let chartStepSize = 50000000;
+            let chartCallback = function(value) { return 'Rp ' + (value/1000000) + ' Jt'; };
+
             if(chartFilterType === 'all' || chartFilterType === 'kebutuhan') {
                 datasets.push({ label: 'Kebutuhan Dana', data: dataKebutuhan, backgroundColor: 'rgba(239, 68, 68, 0.9)', borderRadius: 8, maxBarThickness: 45 });
             }
             if(chartFilterType === 'all' || chartFilterType === 'pemasukan') {
                 datasets.push({ label: 'Dana Masuk', data: dataMasuk, backgroundColor: 'rgba(37, 99, 235, 0.9)', borderRadius: 8, maxBarThickness: 45 });
+            }
+            if(chartFilterType === 'dai') {
+                datasets.push({ label: 'Jumlah Dai', data: dataDai, backgroundColor: 'rgba(16, 185, 129, 0.9)', borderRadius: 8, maxBarThickness: 45 });
+                chartStepSize = 50;
+                chartCallback = function(value) { return value + ' Orang'; };
             }
 
             const ctx = document.getElementById('financeChart').getContext('2d');
@@ -535,8 +536,8 @@
                             border: { display: false },
                             grid: { color: 'rgba(203, 213, 225, 0.4)' },
                             ticks: { 
-                                stepSize: 50000000, // Kelipatan 50 Juta sesuai Request
-                                callback: function(value) { return 'Rp ' + (value/1000000) + ' Jt'; },
+                                stepSize: chartStepSize,
+                                callback: chartCallback,
                                 font: { weight: 'bold' }
                             } 
                         } 
@@ -629,10 +630,6 @@
             }).then(async (res) => {
                 if(res.isConfirmed) {
                     showLoader('Menghapus...');
-                    if (!GAS_API_URL) {
-                        db = db.filter(x => x.ID !== id); // Simulasi
-                        processDataAndRender(); hideLoader(); return;
-                    }
                     
                     let result = await deleteFromDatabase(id);
                     if(result.status === 'success') loadData();
@@ -710,27 +707,13 @@
             showLoader("Menyimpan ke Server...");
 
             // Logic Simpan
-            if(!GAS_API_URL) {
-                setTimeout(() => { // Simulasi
-                    if(editId) {
-                        let idx = db.findIndex(x => x.ID === editId);
-                        if(idx > -1) { Object.assign(db[idx], {Tanggal: payload.tanggal, Nominal: payload.nominal, Tipe: payload.tipe, Keterangan: payload.keterangan}); }
-                    } else {
-                        payload.ID = "SIM-" + Date.now();
-                        db.push(payload);
-                    }
-                    Swal.fire('Berhasil', 'Tersimpan (Mode Simulasi)', 'success');
-                    cancelEdit(); processDataAndRender(); btn.disabled = false; hideLoader(); switchTabUI('rekap');
-                }, 800);
+            let res = await saveToDatabase(payload);
+            btn.disabled = false;
+            if(res.status === 'success') {
+                Swal.fire({ title: 'Berhasil', text: 'Data disimpan', icon: 'success', customClass: { popup: 'rounded-4' } });
+                cancelEdit(); loadData(); switchTabUI('rekap');
             } else {
-                let res = await saveToDatabase(payload);
-                btn.disabled = false;
-                if(res.status === 'success') {
-                    Swal.fire({ title: 'Berhasil', text: 'Data disimpan', icon: 'success', customClass: { popup: 'rounded-4' } });
-                    cancelEdit(); loadData(); switchTabUI('rekap');
-                } else {
-                    hideLoader(); Swal.fire('Gagal Menyimpan', res.message, 'error');
-                }
+                hideLoader(); Swal.fire('Gagal Menyimpan', res.message, 'error');
             }
         }
 
@@ -755,20 +738,6 @@
         function hideLoader() { document.getElementById('loader').style.display = 'none'; }
         const toBase64 = file => new Promise((res, rej) => { const r = new FileReader(); r.readAsDataURL(file); r.onload = () => res(r.result); r.onerror = e => rej(e); });
 
-        function getDummyData() {
-            return [
-                { ID: "S1", Tipe: "Kebutuhan", Tanggal: "2026-04-01", Nominal: 459416000, Keterangan: "300" },
-                { ID: "S2", Tipe: "Pemasukan", Tanggal: "2026-04-15", Nominal: 450000000, Keterangan: "WIZ" },
-                { ID: "S3", Tipe: "Kebutuhan", Tanggal: "2026-05-01", Nominal: 467582000, Keterangan: "310" },
-                { ID: "S4", Tipe: "Pemasukan", Tanggal: "2026-05-20", Nominal: 310000000, Keterangan: "WIZ" },
-                { ID: "S5", Tipe: "Kebutuhan", Tanggal: "2026-06-01", Nominal: 452375000, Keterangan: "298" },
-                { ID: "S6", Tipe: "Pemasukan", Tanggal: "2026-06-10", Nominal: 320000000, Keterangan: "WIZ" },
-                { ID: "S7", Tipe: "Kebutuhan", Tanggal: "2026-07-01", Nominal: 447430000, Keterangan: "290" },
-                { ID: "S8", Tipe: "Pemasukan", Tanggal: "2026-07-15", Nominal: 240000000, Keterangan: "WIZ" },
-                { ID: "S9", Tipe: "Kebutuhan", Tanggal: "2026-08-01", Nominal: 413392000, Keterangan: "280" },
-                { ID: "S10", Tipe: "Pemasukan", Tanggal: "2026-08-20", Nominal: 40000000, Keterangan: "WIZ" }
-            ];
-        }
     </script>
 </body>
 </html>
